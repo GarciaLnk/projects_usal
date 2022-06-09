@@ -1,0 +1,30 @@
+#!/bin/bash
+
+NOW=$(date +"%d/%m/%Y %H:%M")
+WEBHOOK_URL="https://discord.com/api/webhooks/<introduce tu webhook>"
+
+case "$1" in
+start)
+    USERNAME='"Sistema Encendido"'
+    AVATAR_URL='"https://i.imgur.com/sBIKouz.png"'
+    MESSAGE="\"El sistema se ha arrancado: ${NOW}\""
+    ;;
+
+stop)
+    USERNAME='"Sistema Apagado"'
+    AVATAR_URL='"https://i.imgur.com/Zjes9fv.png"'
+    MESSAGE="\"El sistema se ha apagado: ${NOW}\""
+    ;;
+
+*)
+    exit 1
+    ;;
+esac
+
+echo "Emitiendo alerta a Discord..."
+curl -s \
+    -H "Content-Type: application/json" \
+    -d "{\"username\": ${USERNAME}, \
+         \"avatar_url\": ${AVATAR_URL}, \
+         \"content\": ${MESSAGE}}" \
+    "${WEBHOOK_URL}"

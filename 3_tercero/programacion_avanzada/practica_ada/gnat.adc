@@ -1,0 +1,2 @@
+pragma Task_Dispatching_Policy (Fifo_Within_Priorities);
+pragma Locking_Policy (Ceiling_Locking);

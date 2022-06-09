@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Main-Class: client.Gestor
+Class-Path: lib/jakarta.ws.rs-api-2.1.6.jar 
+ lib/aopalliance-repackaged-2.6.1.jar lib/hk2-api-2.6.1.jar 
+ lib/hk2-locator-2.6.1.jar lib/hk2-utils-2.6.1.jar 
+ lib/jakarta.activation-api-1.2.2.jar lib/jakarta.annotation-api-1.3.5.jar 
+ lib/jakarta.inject-2.6.1.jar lib/jakarta.json-1.1.6-module.jar 
+ lib/jakarta.json-1.1.6.jar lib/jakarta.json-api-1.1.6.jar 
+ lib/jakarta.json.bind-api-1.0.2.jar lib/jakarta.persistence-api-2.2.3.jar 
+ lib/jakarta.servlet-api-4.0.3.jar lib/jakarta.validation-api-2.0.2.jar 
+ lib/jakarta.ws.rs-api-2.1.6-sources.jar lib/jakarta.xml.bind-api-2.3.3.jar 
+ lib/javassist-3.25.0-GA.jar lib/org.osgi.core-6.0.0.jar 
+ lib/osgi-resource-locator-1.0.3.jar lib/yasson-1.0.9.jar 
+ lib/jersey-client.jar lib/jersey-container-servlet-core.jar 
+ lib/jersey-common.jar lib/jersey-container-servlet.jar lib/jersey-hk2.jar 
+ lib/jersey-media-jaxb.jar lib/jersey-media-json-binding.jar 
+ lib/jersey-media-sse.jar lib/jersey-server.jar
+
