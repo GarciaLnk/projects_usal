@@ -47,9 +47,7 @@ contract ProductContract {
      * @dev limita y comprueba que el que fabricante sea el único que puede ejecutar la tarea
      */
     modifier onlyManufacturer() {
-        require(
-            msg.sender == productManufacturer
-        );
+        require(msg.sender == productManufacturer);
         _;
     }
 
@@ -66,7 +64,7 @@ contract ProductContract {
         string[] memory _participants
     ) public onlyManufacturer returns (Product memory) {
         require(
-            // comprueba que el 
+            // comprueba que el
             bytes(productSupplyChain[_trackingID].trackingID).length <= 0
         );
         uint256 _timestamp = block.timestamp;
@@ -148,9 +146,7 @@ contract ProductContract {
         public
         returns (string memory, string memory)
     {
-        require(
-            bytes(productSupplyChain[_productID].trackingID).length > 0
-        ); // comprueba que el producto existe en la cadena de suministros
+        require(bytes(productSupplyChain[_productID].trackingID).length > 0); // comprueba que el producto existe en la cadena de suministros
 
         address newCustodian;
         string memory ourAddress = addressToString(msg.sender);
@@ -175,9 +171,7 @@ contract ProductContract {
                 isParticipant = true;
             }
         }
-        require(
-            isParticipant
-        ); // comprueba que quien hace la llamada está en la lista de participantes
+        require(isParticipant); // comprueba que quien hace la llamada está en la lista de participantes
 
         uint256 _timestamp = block.timestamp;
         productSupplyChain[_productID].custodian = msg.sender;
@@ -197,9 +191,7 @@ contract ProductContract {
         view
         returns (Product memory)
     {
-        require(
-            bytes(productSupplyChain[_trackingID].trackingID).length > 0
-        ); // comprueba que el producto existe
+        require(bytes(productSupplyChain[_trackingID].trackingID).length > 0); // comprueba que el producto existe
         return productSupplyChain[_trackingID];
     }
 

@@ -4,19 +4,21 @@
 
 #include "./salida.h"
 
-void mensaje(int n, int origen, int destino, int contador) {
+void mensaje(int n, int origen, int destino, int contador)
+{
     printf("\n\n\n Movimiento numero %d\n", contador);
     printf("\n Mueve el disco %d desde la torre %d a la %d\n", n, origen,
-           destino);
+        destino);
 }
 
 // Crea las strings necesarias para poder representar los discos y las torres
 // de forma apropiada aunque varie el numero de discos, luego las muestra por
 // pantalla.
-void dibujar_estado(int n_discos, int **torre) {
+void dibujar_estado(int n_discos, int** torre)
+{
     int i, j;
 
-    char **disco = malloc((n_discos + 1) * sizeof(*disco));
+    char** disco = malloc((n_discos + 1) * sizeof(*disco));
     if (disco == NULL)
         exit(-1);
     for (i = 0; i < n_discos + 1; i++) {
@@ -34,7 +36,7 @@ void dibujar_estado(int n_discos, int **torre) {
         strncat(disco[0], " ", 2);
 
     // Cada elemento i en el array disco es una string con i*2-1 caracteres
-    // que representan un disco unico de tamaño i
+    // que representan un disco unico de tamaï¿½o i
     for (i = 1; i < n_discos + 1; i++) {
         strncpy(disco[i], "", 1);
         for (j = 0; j < n_discos - i; j++)
@@ -48,11 +50,11 @@ void dibujar_estado(int n_discos, int **torre) {
     }
 
     // Imprime las torres por pantalla, el valor de cada elemento del array
-    // torre es igual al tamaño del disco que hay en esa posicion
+    // torre es igual al tamaï¿½o del disco que hay en esa posicion
     printf("\n    %s   %s   %s ", disco[0], disco[0], disco[0]);
     for (i = 0; i < n_discos; i++) {
         printf("\n ");
-        for(j = 0; j < 3; j++)
+        for (j = 0; j < 3; j++)
             printf("   %s", disco[torre[i][j]]);
     }
 

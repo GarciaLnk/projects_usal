@@ -7,7 +7,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define CHAR_NF 32  // Para marcar no encontrado (espacio, por simplificar)
+#define CHAR_NF 32 // Para marcar no encontrado (espacio, por simplificar)
 #define CHAR_MIN 33
 #define CHAR_MAX 127
 
@@ -16,21 +16,25 @@
 
 #define MAX_LONGITUD_PALABRA 255
 
-double mygettime(void) {
+double mygettime(void)
+{
     double time = 0.0;
     time = clock();
     return time / CLOCKS_PER_SEC;
 }
 
-void fuerza_espera(unsigned long peso) {
-    for (unsigned long i = 1; i < 1 * peso; i++) sqrt(i);
+void fuerza_espera(unsigned long peso)
+{
+    for (unsigned long i = 1; i < 1 * peso; i++)
+        sqrt(i);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
     int id, numprocs;
     unsigned int seed;
-    char palabra_secreta[MAX_LONGITUD_PALABRA] = {0};
-    char palabra_adivina[MAX_LONGITUD_PALABRA] = {0};
+    char palabra_secreta[MAX_LONGITUD_PALABRA] = { 0 };
+    char palabra_adivina[MAX_LONGITUD_PALABRA] = { 0 };
     char pista[MAX_LONGITUD_PALABRA];
     char pista_anterior[MAX_LONGITUD_PALABRA];
     int lpalabra, idcomprobador;
@@ -54,7 +58,7 @@ int main(int argc, char *argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &id);
     MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
 
-    if (id == 0) {  // E/S
+    if (id == 0) { // E/S
         if (numparams < 3) {
             printf("Numero de argumentos invalido\n");
             printf("Uso: mpirun -np [numprocesos] mpi [numcomprobadores] [modopista]\n");
@@ -73,9 +77,9 @@ int main(int argc, char *argv[]) {
         }
 
         printf("NUMERO DE PROCESOS: Total %d: E/S: 1, Comprobadores: %d, Generadores: %d\n\n",
-               numprocs, numcomp, numprocs - numcomp - 1);
+            numprocs, numcomp, numprocs - numcomp - 1);
         snprintf(palabra_secreta, sizeof(palabra_secreta),
-                 "ABCDEFGHIJKLMNIOQUJAKSGHAJHGFSGfghafsghafsghafstjharfasdhjshdjh216531823612678&&!1281asdasdjahsdkjhadsljhaejuj");
+            "ABCDEFGHIJKLMNIOQUJAKSGHAJHGFSGfghafsghafsghafstjharfasdhjshdjh216531823612678&&!1281asdasdjahsdkjhadsljhaejuj");
         lpalabra = strlen(palabra_secreta);
         MPI_Bcast(&lpalabra, sizeof(lpalabra), MPI_INT, 0, MPI_COMM_WORLD);
 
@@ -102,7 +106,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (id == 0) {
-        double arrTC[4] = {0}, arrTG[10] = {0}, arrTE[10] = {0};
+        double arrTC[4] = { 0 }, arrTG[10] = { 0 }, arrTE[10] = { 0 };
         int gentotal, comptotal;
         double tmptotal;
 
@@ -145,7 +149,7 @@ int main(int argc, char *argv[]) {
 
             gentotal += ngeneraciones;
             printf("%02d) %4d %4d | %f, %f (%f), %f (%f)\n", i, ngeneraciones, gentotal, tmpgentotal, tmpsumgen,
-                   (tmpsumgen / tmpgentotal) * 100, tmpsumespera, (tmpsumespera / tmpgentotal) * 100);
+                (tmpsumgen / tmpgentotal) * 100, tmpsumespera, (tmpsumespera / tmpgentotal) * 100);
 
             arrTG[i - (numcomp + 1)] = tmpsumgen / tmpgentotal;
             arrTE[i - (numcomp + 1)] = tmpsumespera / tmpgentotal;
@@ -165,7 +169,7 @@ int main(int argc, char *argv[]) {
 
             comptotal += ncomprobaciones;
             printf("%02d) %4d %4d | %f, %f (%f)\n", i, ncomprobaciones, comptotal, tmpcomptotal, tmpsumcomp,
-                   (tmpsumcomp / tmpcomptotal) * 100);
+                (tmpsumcomp / tmpcomptotal) * 100);
 
             arrTC[i - 1] = tmpsumcomp / tmpcomptotal;
         }
@@ -188,7 +192,7 @@ int main(int argc, char *argv[]) {
         //     arrTG[5], arrTE[5], arrTG[6], arrTE[6], arrTG[7], arrTE[7], arrTG[8], arrTE[8], arrTG[9], arrTE[9],
         //     comptotal / tmptotal);
 
-    } else if (idcomprobador == 0) {  // Comprobador
+    } else if (idcomprobador == 0) { // Comprobador
         MPI_Recv(&palabra_secreta, sizeof(palabra_secreta), MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
         tmpsumcomp = 0;
@@ -201,7 +205,7 @@ int main(int argc, char *argv[]) {
                 MPI_Recv(&control, sizeof(control), MPI_CHAR, infosender.MPI_SOURCE, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             } else {
                 MPI_Recv(&palabra_adivina, sizeof(palabra_adivina), MPI_CHAR,
-                         infosender.MPI_SOURCE, 0, MPI_COMM_WORLD, &infogen);
+                    infosender.MPI_SOURCE, 0, MPI_COMM_WORLD, &infogen);
                 tmpcomp = mygettime();
                 for (int i = 0; i < lpalabra; i++) {
                     if (palabra_secreta[i] == palabra_adivina[i]) {
@@ -223,7 +227,7 @@ int main(int argc, char *argv[]) {
         MPI_Send(&tmpsumcomp, sizeof(tmpsumcomp), MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
         MPI_Send(&tmpcomptotal, sizeof(tmpcomptotal), MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
         MPI_Send(&ncomprobaciones, sizeof(ncomprobaciones), MPI_INT, 0, 2, MPI_COMM_WORLD);
-    } else {  // Generador
+    } else { // Generador
         // seed = time(NULL) * id;
         seed = 1647545409 * id;
         srand(seed);

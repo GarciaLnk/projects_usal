@@ -22,25 +22,28 @@
 
 volatile sig_atomic_t stop;
 
-void stophandler() {
+void stophandler()
+{
     stop = 1;
 }
 
-void handler() {
+void handler()
+{
     printf("Alarma recibida\n");
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
     char tcpstr[] = "TCP", udpstr[] = "UDP";
     int isTCP, sock;
     struct sockaddr_in servaddr_in, myaddr_in;
     struct addrinfo hints;
-    struct addrinfo *result;
+    struct addrinfo* result;
     int addrlen, i;
     struct sigaction salrm, sint;
     char buf[BUFFER_SIZE], tmpchar, *tokbuf, *campo;
     char command[100], filename[100], connection[100], hostname[100];
-    FILE *file = NULL;
+    FILE* file = NULL;
     char logfile[100];
 
     if (argc < 3) {
@@ -81,8 +84,8 @@ int main(int argc, char *argv[]) {
     }
 
     // pone a cero las estructuras de las direcciones de los sockets
-    memset((char *)&myaddr_in, 0, sizeof(struct sockaddr_in));
-    memset((char *)&servaddr_in, 0, sizeof(struct sockaddr_in));
+    memset((char*)&myaddr_in, 0, sizeof(struct sockaddr_in));
+    memset((char*)&servaddr_in, 0, sizeof(struct sockaddr_in));
 
     // establece los valores de la direccion a la que nos conectaremos (IPv4)
     servaddr_in.sin_family = AF_INET;
@@ -95,30 +98,32 @@ int main(int argc, char *argv[]) {
     if (getaddrinfo(hostname, NULL, &hints, &result) != 0) {
         perror(argv[0]);
         fprintf(stderr, "%s: error al resolver la IP de %s\n",
-                argv[0], hostname);
+            argv[0], hostname);
         exit(1);
     }
 
     // copia la direccion del host devuelto
-    servaddr_in.sin_addr = ((struct sockaddr_in *)result->ai_addr)->sin_addr;
+    servaddr_in.sin_addr = ((struct sockaddr_in*)result->ai_addr)->sin_addr;
     // libera la memoria asignada a res ya que no necesitamos mas informacion
     freeaddrinfo(result);
 
-    servaddr_in.sin_port = htons(PORT);  // puerto en orden de red
+    servaddr_in.sin_port = htons(PORT); // puerto en orden de red
 
     // segun la descripcion del manual de connect() para UDP
     // connect() NO establece conexion con el servidor remoto solo asocia
     // un puerto efimero y la direccion local al socket, como bind
-    if (connect(sock, (const struct sockaddr *)&servaddr_in,
-                sizeof(struct sockaddr_in)) == -1) {
+    if (connect(sock, (const struct sockaddr*)&servaddr_in,
+            sizeof(struct sockaddr_in))
+        == -1) {
         perror(argv[0]);
         fprintf(stderr, "%s: error al conectarse con el servidor\n", argv[0]);
         exit(1);
     }
 
     addrlen = sizeof(struct sockaddr_in);
-    if (getsockname(sock, (struct sockaddr *)&myaddr_in,
-                    (socklen_t *)&addrlen) == -1) {
+    if (getsockname(sock, (struct sockaddr*)&myaddr_in,
+            (socklen_t*)&addrlen)
+        == -1) {
         perror(argv[0]);
         fprintf(stderr, "%s: error al leer la direccion de socket\n", argv[0]);
         exit(1);
@@ -126,7 +131,7 @@ int main(int argc, char *argv[]) {
 
 #ifndef DEBUG
     snprintf(logfile, sizeof(logfile),
-             "%u.txt", ntohs(myaddr_in.sin_port));
+        "%u.txt", ntohs(myaddr_in.sin_port));
     if (freopen(logfile, "w+", stdout) == NULL) {
         perror(argv[0]);
         fprintf(stderr, "%s: error al abrir el txt\n", argv[0]);
@@ -174,15 +179,18 @@ int main(int argc, char *argv[]) {
             }
             buf[strcspn(buf, "\r\n")] = 0;
         }
-        if (stop) break;
-        if (strlen(buf) == 0) continue;
+        if (stop)
+            break;
+        if (strlen(buf) == 0)
+            continue;
 
         bzero(command, sizeof(command));
         bzero(filename, sizeof(filename));
         bzero(connection, sizeof(connection));
         tokbuf = strtok_r(buf, " ", &campo);
         for (i = 0; i < 3; i++) {
-            if (tokbuf == NULL) break;
+            if (tokbuf == NULL)
+                break;
 
             if (i == 0) {
                 strncpy(command, tokbuf, sizeof(command) - 1);
@@ -202,16 +210,16 @@ int main(int argc, char *argv[]) {
         }
 
         snprintf(buf, sizeof(buf),
-                 "%s %s HTTP/1.1\r\n"
-                 "Host: %s\r\n"
-                 "Connection: %s\r\n"
-                 "\r\n",
-                 command, filename, hostname, connection);
+            "%s %s HTTP/1.1\r\n"
+            "Host: %s\r\n"
+            "Connection: %s\r\n"
+            "\r\n",
+            command, filename, hostname, connection);
         if (isTCP) {
             n = send(sock, buf, BUFFER_SIZE, 0);
         } else {
             n = sendto(sock, buf, BUFFER_SIZE, 0,
-                       (struct sockaddr *)&servaddr_in, addrlen);
+                (struct sockaddr*)&servaddr_in, addrlen);
         }
         if (n == -1) {
             perror(argv[0]);
@@ -232,8 +240,9 @@ int main(int argc, char *argv[]) {
                     // reintentar conexion
                     close(sock);
                     sock = socket(AF_INET, SOCK_STREAM, 0);
-                    if (connect(sock, (const struct sockaddr *)&servaddr_in,
-                                sizeof(struct sockaddr_in)) == -1) {
+                    if (connect(sock, (const struct sockaddr*)&servaddr_in,
+                            sizeof(struct sockaddr_in))
+                        == -1) {
                         perror(argv[0]);
                         fprintf(stderr, "%s: error al conectarse\n", argv[0]);
                         exit(1);
@@ -254,8 +263,8 @@ int main(int argc, char *argv[]) {
         } else {
             do {
                 n = recvfrom(sock, buf, BUFFER_SIZE, 0,
-                             (struct sockaddr *)&servaddr_in,
-                             (socklen_t *)&addrlen);
+                    (struct sockaddr*)&servaddr_in,
+                    (socklen_t*)&addrlen);
                 if (n == -1) {
                     perror(argv[0]);
                     fprintf(stderr, "%s: error al hacer recvfrom\n", argv[0]);
@@ -265,7 +274,7 @@ int main(int argc, char *argv[]) {
                 printf("%s\n", buf);
             } while (n == BUFFER_SIZE);
         }
-        alarm(0);  // cancela la alarma pendiente
+        alarm(0); // cancela la alarma pendiente
 
         printf("\n");
     }

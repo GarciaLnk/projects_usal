@@ -20,24 +20,13 @@ class Director extends Persona {
   String directorToCol() {
     String tab = "\t";
 
-    return getNombre()
-        + tab
-        + ((getFechaNac() != null) ? getFechaNac() : NO_AVAILABLE)
-        + tab
-        + getNacion()
-        + tab
-        + getOcupacion()
-        + tab
-        + peliculasToString();
+    return getNombre() + tab + ((getFechaNac() != null) ? getFechaNac() : NO_AVAILABLE) + tab
+        + getNacion() + tab + getOcupacion() + tab + peliculasToString();
   }
 
   String directorToTable() {
-    return String.format(
-        "| %-20s | %-16s | %-15s | %-65s |",
-        getNombre(),
-        (getFechaNac() != null) ? getFechaNac() : NO_AVAILABLE,
-        getNacion(),
-        getOcupacion());
+    return String.format("| %-20s | %-16s | %-15s | %-65s |", getNombre(),
+        (getFechaNac() != null) ? getFechaNac() : NO_AVAILABLE, getNacion(), getOcupacion());
   }
 
   private String getOcupacion() {

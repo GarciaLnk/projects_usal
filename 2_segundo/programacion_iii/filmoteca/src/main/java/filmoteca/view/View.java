@@ -57,11 +57,8 @@ public class View {
   private void menuArchivos() {
     boolean volver = false;
     do {
-      out.printf(
-          "%nArchivos"
-              + "%n1) Exportar directores a directores.col"
-              + "%n2) Exportar películas a películas.html"
-              + FIN_MENU);
+      out.printf("%nArchivos" + "%n1) Exportar directores a directores.col"
+          + "%n2) Exportar películas a películas.html" + FIN_MENU);
 
       String opcion = sc.nextLine();
       switch (opcion) {
@@ -97,13 +94,8 @@ public class View {
   private void menuPeliculas() {
     boolean volver = false;
     do {
-      out.printf(
-          "%nPelículas"
-              + "%n1) Dar de alta una película"
-              + "%n2) Dar de baja una película"
-              + "%n3) Modificar una película"
-              + "%n4) Consulta"
-              + FIN_MENU);
+      out.printf("%nPelículas" + "%n1) Dar de alta una película" + "%n2) Dar de baja una película"
+          + "%n3) Modificar una película" + "%n4) Consulta" + FIN_MENU);
       String opcion = sc.nextLine();
       switch (opcion) {
         case "1":
@@ -150,20 +142,8 @@ public class View {
     String sinopsis = readString("Por favor, escriba una sinopsis de la trama: ");
     String delim = ", ";
 
-    controller.darAltaPelicula(
-        titulo,
-        anno,
-        duracion,
-        pais,
-        direccion,
-        guion,
-        musica,
-        fotografia,
-        reparto,
-        productora,
-        genero,
-        sinopsis,
-        delim);
+    controller.darAltaPelicula(titulo, anno, duracion, pais, direccion, guion, musica, fotografia,
+        reparto, productora, genero, sinopsis, delim);
 
     out.printf("%nLa película \"%s\" se ha añadido correctamente%n", titulo);
   }
@@ -193,19 +173,9 @@ public class View {
   private void menuModificarPelicula(String titulo) {
     boolean volver = false;
     do {
-      out.printf(
-          "%nModificar datos de la película \"%s\""
-              + "%n1) Año"
-              + "%n2) Duración"
-              + "%n3) País"
-              + "%n4) Guión"
-              + "%n5) Música"
-              + "%n6) Fotografía"
-              + "%n7) Productora"
-              + "%n8) Género"
-              + "%n9) Sinopsis"
-              + FIN_MENU,
-          titulo);
+      out.printf("%nModificar datos de la película \"%s\"" + "%n1) Año" + "%n2) Duración"
+          + "%n3) País" + "%n4) Guión" + "%n5) Música" + "%n6) Fotografía" + "%n7) Productora"
+          + "%n8) Género" + "%n9) Sinopsis" + FIN_MENU, titulo);
       String opcion = sc.nextLine();
       switch (opcion) {
         case "1":
@@ -218,16 +188,16 @@ public class View {
           controller.setPaisPeli(titulo, readString("Escriba el nuevo país: "));
           break;
         case "4":
-          controller.setGuionPeli(
-              titulo, readString("Escriba el nombre de los nuevos guionistas: "));
+          controller.setGuionPeli(titulo,
+              readString("Escriba el nombre de los nuevos guionistas: "));
           break;
         case "5":
-          controller.setMusicaPeli(
-              titulo, readString("Escriba el nombre de los nuevos compositores: "));
+          controller.setMusicaPeli(titulo,
+              readString("Escriba el nombre de los nuevos compositores: "));
           break;
         case "6":
-          controller.setFotografiaPeli(
-              titulo, readString("Escriba el nombre de los nuevos directores de fotografía: "));
+          controller.setFotografiaPeli(titulo,
+              readString("Escriba el nombre de los nuevos directores de fotografía: "));
           break;
         case "7":
           controller.setProductoraPeli(titulo, readString("Indique la nueva productora: "));
@@ -262,12 +232,8 @@ public class View {
   private void menuDirectores() {
     boolean volver = false;
     do {
-      out.printf(
-          "%nDirectores"
-              + "%n1) Dar de alta un director"
-              + "%n2) Dar de baja un director"
-              + "%n3) Modificar un director"
-              + FIN_MENU);
+      out.printf("%nDirectores" + "%n1) Dar de alta un director" + "%n2) Dar de baja un director"
+          + "%n3) Modificar un director" + FIN_MENU);
       String opcion = sc.nextLine();
       switch (opcion) {
         case "1":
@@ -338,25 +304,20 @@ public class View {
   private void menuModificarDirector(String nombre) {
     boolean volver = false;
     do {
-      out.printf(
-          "%nModificar datos del director \"%s\""
-              + "%n1) Fecha de nacimiento"
-              + "%n2) Nacionalidad"
-              + "%n3) Ocupación"
-              + FIN_MENU,
-          nombre);
+      out.printf("%nModificar datos del director \"%s\"" + "%n1) Fecha de nacimiento"
+          + "%n2) Nacionalidad" + "%n3) Ocupación" + FIN_MENU, nombre);
       String opcion = sc.nextLine();
       switch (opcion) {
         case "1":
-          controller.setFechaNacDire(
-              nombre, readLocalDate("Indique la nueva fecha de nacimiento: "));
+          controller.setFechaNacDire(nombre,
+              readLocalDate("Indique la nueva fecha de nacimiento: "));
           break;
         case "2":
           controller.setNacionDire(nombre, readString("Indique la nueva nacionalidad: "));
           break;
         case "3":
-          controller.setOcupacionDire(
-              nombre, readString("Escriba la nueva ocupación del director: "));
+          controller.setOcupacionDire(nombre,
+              readString("Escriba la nueva ocupación del director: "));
           break;
         case "s":
         case "S":
@@ -372,13 +333,8 @@ public class View {
   private void menuActores() {
     boolean volver = false;
     do {
-      out.printf(
-          "%nActores"
-              + "%n1) Dar de alta un actor"
-              + "%n2) Dar de baja un actor"
-              + "%n3) Modificar un actor"
-              + "%n4) Películas de un actor"
-              + FIN_MENU);
+      out.printf("%nActores" + "%n1) Dar de alta un actor" + "%n2) Dar de baja un actor"
+          + "%n3) Modificar un actor" + "%n4) Películas de un actor" + FIN_MENU);
       String opcion = sc.nextLine();
       switch (opcion) {
         case "1":
@@ -412,9 +368,8 @@ public class View {
     LocalDate fechaNac = readLocalDate("Por favor, indique la fecha de nacimiento: ");
     String nacion = readString("Por favor, indique la nacionalidad: ");
     Integer annoDebut = readInteger("Por favor, escriba el año de debut del actor: ");
-    String peliculas =
-        readString(
-            "Por favor, escriba las películas en las que ha actuado (separadas por comas): ");
+    String peliculas = readString(
+        "Por favor, escriba las películas en las que ha actuado (separadas por comas): ");
     String delim = ", ";
 
     controller.darAltaActor(nombre, fechaNac, nacion, annoDebut, peliculas, delim);
@@ -454,18 +409,13 @@ public class View {
   private void menuModificarActor(String nombre) {
     boolean volver = false;
     do {
-      out.printf(
-          "%nModificar datos del actor \"%s\""
-              + "%n1) Fecha de nacimiento"
-              + "%n2) Nacionalidad"
-              + "%n3) Año de debut"
-              + FIN_MENU,
-          nombre);
+      out.printf("%nModificar datos del actor \"%s\"" + "%n1) Fecha de nacimiento"
+          + "%n2) Nacionalidad" + "%n3) Año de debut" + FIN_MENU, nombre);
       String opcion = sc.nextLine();
       switch (opcion) {
         case "1":
-          controller.setFechaNacActor(
-              nombre, readLocalDate("Indique la nueva fecha de nacimiento: "));
+          controller.setFechaNacActor(nombre,
+              readLocalDate("Indique la nueva fecha de nacimiento: "));
           break;
         case "2":
           controller.setNacionActor(nombre, readString("Indique la nueva nacionalidad: "));
@@ -485,9 +435,8 @@ public class View {
   }
 
   private void listadoPeliculasActor() {
-    String nombre =
-        readStringNotEmpty(
-            "Por favor, escriba el nombre del actor cuyas películas desea consultar: ");
+    String nombre = readStringNotEmpty(
+        "Por favor, escriba el nombre del actor cuyas películas desea consultar: ");
     if (controller.buscarActor(nombre)) {
       String peliculasActor = controller.getPeliculasActorAsTable(nombre);
       if (!peliculasActor.isEmpty()) {
@@ -507,12 +456,8 @@ public class View {
   private void menuListados() {
     boolean volver = false;
     do {
-      out.printf(
-          "%nListados"
-              + "%n1) Listado de películas"
-              + "%n2) Listado de directores"
-              + "%n3) Listado de actores"
-              + FIN_MENU);
+      out.printf("%nListados" + "%n1) Listado de películas" + "%n2) Listado de directores"
+          + "%n3) Listado de actores" + FIN_MENU);
 
       String opcion = sc.nextLine();
       switch (opcion) {
@@ -558,9 +503,8 @@ public class View {
       String formato = "+-%.20s-+-%.16s-+-%.15s-+-%.65s-+-%.75s%.75s-+%n";
       out.println("\nDIRECTORES");
       out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
-      out.printf(
-          "| %-20s | %-16s | %-15s | %-65s | %-150s |%n",
-          "NOMBRE", "FECHA NACIMIENTO", "NACIONALIDAD", "OCUPACIÓN", "PELÍCULAS");
+      out.printf("| %-20s | %-16s | %-15s | %-65s | %-150s |%n", "NOMBRE", "FECHA NACIMIENTO",
+          "NACIONALIDAD", "OCUPACIÓN", "PELÍCULAS");
       out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
       out.println(directores);
       out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
@@ -575,9 +519,8 @@ public class View {
       String formato = "+-%.20s-+-%.16s-+-%.15s-+-%.9s-+-%.75s%.75s-+%n";
       out.println("\nACTORES");
       out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
-      out.printf(
-          "| %-20s | %-16s | %-15s | %-9s | %-150s |%n",
-          "NOMBRE", "FECHA NACIMIENTO", "NACIONALIDAD", "AÑO DEBUT", "PELÍCULAS");
+      out.printf("| %-20s | %-16s | %-15s | %-9s | %-150s |%n", "NOMBRE", "FECHA NACIMIENTO",
+          "NACIONALIDAD", "AÑO DEBUT", "PELÍCULAS");
       out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
       out.println(actores);
       out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
@@ -588,8 +531,8 @@ public class View {
 
   private void imprimirCabeceraPelicula(String formato) {
     out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
-    out.printf(
-        "| %-65s | %-4s | %-8s | %-25s | %-15s |%n", "TÍTULO", "AÑO", "DURACIÓN", "PAÍS", "GÉNERO");
+    out.printf("| %-65s | %-4s | %-8s | %-25s | %-15s |%n", "TÍTULO", "AÑO", "DURACIÓN", "PAÍS",
+        "GÉNERO");
     out.printf(formato, GUIONES, GUIONES, GUIONES, GUIONES, GUIONES);
   }
 

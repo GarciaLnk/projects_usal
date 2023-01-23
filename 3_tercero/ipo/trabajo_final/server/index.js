@@ -29,7 +29,7 @@ const mongoDBstore = new MongoDBStore({
 
 app.use(
   session({
-    secret: 'a1s2d3f4g5h6',
+    secret: process.env.SECRET,
     name: 'session-id', // cookies name to be put in "key" field in postman
     store: mongoDBstore,
     cookie: {

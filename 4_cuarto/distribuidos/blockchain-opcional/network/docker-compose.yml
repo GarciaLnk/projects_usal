@@ -1,8 +1,7 @@
 ---
-version: '3.6'
+version: "3.6"
 
-x-besu-def:
-  &besu-def
+x-besu-def: &besu-def
   restart: "on-failure"
   image: hyperledger/besu:${BESU_VERSION:-latest}
   env_file:
@@ -20,9 +19,8 @@ x-besu-def:
       --rpc-http-api=EEA,WEB3,ETH,NET,TRACE,DEBUG,ADMIN,TXPOOL,PERM,${BESU_CONS_ALGO:-QBFT} ;
 
 services:
-
   validator1:
-    << : *besu-def
+    <<: *besu-def
     ports:
       - 21001:8545/tcp
       - 30303
@@ -40,7 +38,7 @@ services:
         ipv4_address: 172.16.239.11
 
   validator2:
-    << : *besu-def
+    <<: *besu-def
     ports:
       - 21002:8545/tcp
       - 30303
@@ -60,7 +58,7 @@ services:
         ipv4_address: 172.16.239.12
 
   validator3:
-    << : *besu-def
+    <<: *besu-def
     ports:
       - 21003:8545/tcp
       - 30303
@@ -80,7 +78,7 @@ services:
         ipv4_address: 172.16.239.13
 
   validator4:
-    << : *besu-def
+    <<: *besu-def
     ports:
       - 21004:8545/tcp
       - 30303
@@ -100,7 +98,7 @@ services:
         ipv4_address: 172.16.239.14
 
   rpcnode:
-    << : *besu-def
+    <<: *besu-def
     container_name: rpcnode
     environment:
       - OTEL_RESOURCE_ATTRIBUTES=service.name=rpcnode,service.version=${BESU_VERSION:-latest}

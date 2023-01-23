@@ -1,24 +1,24 @@
-#define  __USE_POSIX
-#include <stdio.h>
-#include <unistd.h>
+#define __USE_POSIX
+#include <fcntl.h>
 #include <signal.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+#include <stdio.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
-#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-void bifurcar(pid_t * pid1, pid_t * pid2)
+void bifurcar(pid_t* pid1, pid_t* pid2)
 {
     *pid1 = fork();
     if (*pid1 != 0)
         *pid2 = fork();
 }
 
-void manejadora(int sig, siginfo_t * siginfo, void *context)
+void manejadora(int sig, siginfo_t* siginfo, void* context)
 {
     printf("SIGTERM(%d) enviada por %d a %d\n", sig, siginfo->si_pid,
-           getpid());
+        getpid());
 }
 
 int main()
@@ -44,14 +44,14 @@ int main()
         return 1;
     }
 
-    void *mapfd = mmap(0, tam, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    void* mapfd = mmap(0, tam, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     if (mapfd == MAP_FAILED) {
         perror("mmap");
         close(fd);
         munmap(mapfd, tam);
         return 1;
     }
-    int *proyeccion = mapfd;
+    int* proyeccion = mapfd;
     close(fd);
     unlink("pids");
 

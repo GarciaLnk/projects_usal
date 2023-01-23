@@ -23,20 +23,9 @@ class Filmoteca implements Serializable {
   private List<Director> directores = new ArrayList<>();
   private List<Actor> actores = new ArrayList<>();
 
-  void crearPelicula(
-      String titulo,
-      Integer anno,
-      Integer duracion,
-      String pais,
-      String direccion,
-      String guion,
-      String musica,
-      String fotografia,
-      String reparto,
-      String productora,
-      String genero,
-      String sinopsis,
-      String delimDirAct) {
+  void crearPelicula(String titulo, Integer anno, Integer duracion, String pais, String direccion,
+      String guion, String musica, String fotografia, String reparto, String productora,
+      String genero, String sinopsis, String delimDirAct) {
 
     Pelicula peliculaBuscada = buscarPelicula(titulo, peliculas);
     if (peliculaBuscada != null) {
@@ -52,31 +41,16 @@ class Filmoteca implements Serializable {
       peliculaBuscada.setGenero(genero);
       peliculaBuscada.setSinopsis(sinopsis);
     } else {
-      Pelicula p =
-          new Pelicula(
-              titulo,
-              anno,
-              duracion,
-              pais,
-              guion,
-              musica,
-              fotografia,
-              productora,
-              genero,
-              sinopsis);
+      Pelicula p = new Pelicula(titulo, anno, duracion, pais, guion, musica, fotografia, productora,
+          genero, sinopsis);
       p.setDireccion(importDirectores(p, direccion, delimDirAct));
       p.setReparto(importActores(p, reparto, delimDirAct));
       peliculas.add(p);
     }
   }
 
-  void crearDirector(
-      String nombre,
-      LocalDate fechaNac,
-      String nacion,
-      String ocupacion,
-      String peliculas,
-      String delimPeli) {
+  void crearDirector(String nombre, LocalDate fechaNac, String nacion, String ocupacion,
+      String peliculas, String delimPeli) {
 
     Director directorBuscado = buscarDirector(nombre, directores);
     if (directorBuscado != null) {
@@ -91,13 +65,8 @@ class Filmoteca implements Serializable {
     }
   }
 
-  void crearActor(
-      String nombre,
-      LocalDate fechaNac,
-      String nacion,
-      Integer annoDebut,
-      String peliculas,
-      String delimPeli) {
+  void crearActor(String nombre, LocalDate fechaNac, String nacion, Integer annoDebut,
+      String peliculas, String delimPeli) {
 
     Actor actorBuscado = buscarActor(nombre, actores);
     if (actorBuscado != null) {

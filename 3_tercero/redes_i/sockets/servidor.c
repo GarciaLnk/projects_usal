@@ -25,16 +25,18 @@
 #define BUFFER_SIZE 8192
 
 void daemonaux(int sUDP, int lsTCP);
-void server(int sock, struct sockaddr_in clientaddr_in, char *buffer);
+void server(int sock, struct sockaddr_in clientaddr_in, char* buffer);
 
-char *exename;
+char* exename;
 volatile sig_atomic_t stop;
 
-void stophandler() {
+void stophandler()
+{
     stop = 1;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
     int sockUDP;
     int listenTCP;
     struct sockaddr_in myaddr_in;
@@ -52,17 +54,18 @@ int main(int argc, char *argv[]) {
     }
 
     // pone a cero las estructuras de las direcciones de los sockets
-    memset((char *)&myaddr_in, 0, sizeof(struct sockaddr_in));
+    memset((char*)&myaddr_in, 0, sizeof(struct sockaddr_in));
 
     // inicializa la estructura para la direccion del socket de escucha
     myaddr_in.sin_family = AF_INET;
     // el socket se asociara a todas las interfaces locales
     myaddr_in.sin_addr.s_addr = INADDR_ANY;
-    myaddr_in.sin_port = htons(PORT);  // puerto en orden de red
+    myaddr_in.sin_port = htons(PORT); // puerto en orden de red
 
     // asocia una direccion al socket de escucha TCP
-    if (bind(listenTCP, (const struct sockaddr *)&myaddr_in,
-             sizeof(struct sockaddr_in)) == -1) {
+    if (bind(listenTCP, (const struct sockaddr*)&myaddr_in,
+            sizeof(struct sockaddr_in))
+        == -1) {
         perror(argv[0]);
         fprintf(stderr, "%s: error al hacer bind TCP\n", argv[0]);
         exit(1);
@@ -86,8 +89,9 @@ int main(int argc, char *argv[]) {
     }
 
     // asocia una direccion al socket UDP
-    if (bind(sockUDP, (struct sockaddr *)&myaddr_in,
-             sizeof(struct sockaddr_in)) == -1) {
+    if (bind(sockUDP, (struct sockaddr*)&myaddr_in,
+            sizeof(struct sockaddr_in))
+        == -1) {
         perror(argv[0]);
         printf("%s: error al hacer bind UDP\n", argv[0]);
         exit(1);
@@ -98,70 +102,71 @@ int main(int argc, char *argv[]) {
     stop = 0;
 
     switch (fork()) {
-        case -1:
-            perror(argv[0]);
-            fprintf(stderr, "%s: error al hacer fork\n", argv[0]);
-            exit(1);
-        case 0:  // el proceso del hijo devuelve 0 (demonio)
-            // cierra los streams de entrada y error
-            fclose(stdin);
+    case -1:
+        perror(argv[0]);
+        fprintf(stderr, "%s: error al hacer fork\n", argv[0]);
+        exit(1);
+    case 0: // el proceso del hijo devuelve 0 (demonio)
+        // cierra los streams de entrada y error
+        fclose(stdin);
 #ifndef DEBUG
-            fclose(stderr);
-            // stdout se redirecciona a un archivo de log
-            // w+ abre en RW y crea/vacia el archivo
-            if (freopen(logfile, "w+", stdout) == NULL) {
-                perror(argv[0]);
-                fprintf(stderr, "%s: error al abrir el log\n", argv[0]);
-                exit(1);
-            }
-            // desactiva el buffer en stdout
-            setbuf(stdout, NULL);
+        fclose(stderr);
+        // stdout se redirecciona a un archivo de log
+        // w+ abre en RW y crea/vacia el archivo
+        if (freopen(logfile, "w+", stdout) == NULL) {
+            perror(argv[0]);
+            fprintf(stderr, "%s: error al abrir el log\n", argv[0]);
+            exit(1);
+        }
+        // desactiva el buffer en stdout
+        setbuf(stdout, NULL);
 #endif
 
-            // se ignora SIGCHLD para prevenir procesos zombie
-            memset(&saign, 0, sizeof(saign));
-            saign.sa_handler = SIG_IGN;
-            if (sigaction(SIGCHLD, &saign, NULL) == -1) {
-                perror(argv[0]);
-                fprintf(stderr, "%s: error al registrar SIGCHLD\n", argv[0]);
-                exit(1);
-            }
+        // se ignora SIGCHLD para prevenir procesos zombie
+        memset(&saign, 0, sizeof(saign));
+        saign.sa_handler = SIG_IGN;
+        if (sigaction(SIGCHLD, &saign, NULL) == -1) {
+            perror(argv[0]);
+            fprintf(stderr, "%s: error al registrar SIGCHLD\n", argv[0]);
+            exit(1);
+        }
 
-            memset(&sastop, 0, sizeof(sastop));
-            sastop.sa_flags = 0;
-            sastop.sa_handler = stophandler;
-            if (sigaction(SIGTERM, &sastop, NULL) == -1) {
-                perror(argv[0]);
-                fprintf(stderr, "%s: error al registrar SIGTERM\n", argv[0]);
-                exit(1);
-            }
+        memset(&sastop, 0, sizeof(sastop));
+        sastop.sa_flags = 0;
+        sastop.sa_handler = stophandler;
+        if (sigaction(SIGTERM, &sastop, NULL) == -1) {
+            perror(argv[0]);
+            fprintf(stderr, "%s: error al registrar SIGTERM\n", argv[0]);
+            exit(1);
+        }
 
-            while (!stop) {
-                // funcion auxiliar para evitar anidamiento
-                daemonaux(sockUDP, listenTCP);
-            }
+        while (!stop) {
+            // funcion auxiliar para evitar anidamiento
+            daemonaux(sockUDP, listenTCP);
+        }
 
-            // destruye los sockets
-            close(listenTCP);
-            close(sockUDP);
+        // destruye los sockets
+        close(listenTCP);
+        close(sockUDP);
 
-            printf("\nFin de programa servidor!\n");
-            break;
-        default:  // el proceso del padre continua aqui
-            exit(0);
+        printf("\nFin de programa servidor!\n");
+        break;
+    default: // el proceso del padre continua aqui
+        exit(0);
     }
 
     return 0;
 }
 
-void daemonaux(int sUDP, int lsTCP) {
+void daemonaux(int sUDP, int lsTCP)
+{
     fd_set readfds;
     struct sockaddr_in clientaddr_in;
     struct linger linger;
     int maxfd, addrlen;
 
     // pone a cero la estructura de las direcciones de los sockets
-    memset((char *)&clientaddr_in, 0, sizeof(struct sockaddr_in));
+    memset((char*)&clientaddr_in, 0, sizeof(struct sockaddr_in));
 
     addrlen = sizeof(struct sockaddr_in);
 
@@ -190,32 +195,33 @@ void daemonaux(int sUDP, int lsTCP) {
         // comprueba si el socket seleccionado es el de TCP
         if (FD_ISSET(lsTCP, &readfds)) {
             // bloquea hasta que recibe una direccion
-            int sTCP = accept(lsTCP, (struct sockaddr *)&clientaddr_in,
-                              (socklen_t *)&addrlen);
+            int sTCP = accept(lsTCP, (struct sockaddr*)&clientaddr_in,
+                (socklen_t*)&addrlen);
             if (sTCP == -1)
                 exit(1);
 
             switch (fork()) {
-                case -1:  // error al hacer el fork
+            case -1: // error al hacer el fork
+                exit(1);
+            case 0: // el proceso del hijo empieza aqui
+                close(lsTCP); // cierra el socket heredado del demonio
+
+                // hace que el socket espere a que todos los datos
+                // enviados lleguen al cliente remoto o hasta que pase 1s
+                linger.l_onoff = 1; // activado
+                linger.l_linger = 1; // un segundo
+                if (setsockopt(sTCP, SOL_SOCKET, SO_LINGER, &linger,
+                        sizeof(linger))
+                    == -1) {
+                    perror("error al establecer las opciones del socket\n");
                     exit(1);
-                case 0:            // el proceso del hijo empieza aqui
-                    close(lsTCP);  // cierra el socket heredado del demonio
+                }
 
-                    // hace que el socket espere a que todos los datos
-                    // enviados lleguen al cliente remoto o hasta que pase 1s
-                    linger.l_onoff = 1;   // activado
-                    linger.l_linger = 1;  // un segundo
-                    if (setsockopt(sTCP, SOL_SOCKET, SO_LINGER, &linger,
-                                   sizeof(linger)) == -1) {
-                        perror("error al establecer las opciones del socket\n");
-                        exit(1);
-                    }
-
-                    server(sTCP, clientaddr_in, NULL);
-                    exit(0);
-                default:  // el proceso del demonio sigue aqui
-                    // destruye el socket para la conexion TCP
-                    close(sTCP);
+                server(sTCP, clientaddr_in, NULL);
+                exit(0);
+            default: // el proceso del demonio sigue aqui
+                // destruye el socket para la conexion TCP
+                close(sTCP);
             }
         }
 
@@ -223,8 +229,8 @@ void daemonaux(int sUDP, int lsTCP) {
         if (FD_ISSET(sUDP, &readfds)) {
             char buffer[BUFFER_SIZE];
             int n = recvfrom(sUDP, buffer, BUFFER_SIZE, 0,
-                             (struct sockaddr *)&clientaddr_in,
-                             (socklen_t *)&addrlen);
+                (struct sockaddr*)&clientaddr_in,
+                (socklen_t*)&addrlen);
             if (n == -1) {
                 perror("error al hacer recvfrom\n");
                 exit(1);
@@ -239,7 +245,8 @@ void daemonaux(int sUDP, int lsTCP) {
 }
 
 // FUNCIONALIDAD AQUI
-void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
+void server(int sock, struct sockaddr_in clientaddr_in, char* buffer)
+{
     int isTCP, n, code, fd;
     char buf[BUFFER_SIZE];
     char hostname[NI_MAXHOST], ipaddress[45];
@@ -250,21 +257,20 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
     char command[100], path[100], host[100];
     char getcommand[] = "GET", root[] = "./www", hoststr[] = "Host:";
     char nombreserver[] = "Servidor de Angel Iñiguez y Alberto García";
-    char notfoundstr[] =
-        "<html><body><h1>404 Not Found</h1></body></html>";
-    char notimplementedstr[] =
-        "<html><body><h1>501 Not Implemented</h1></body></html>";
+    char notfoundstr[] = "<html><body><h1>404 Not Found</h1></body></html>";
+    char notimplementedstr[] = "<html><body><h1>501 Not Implemented</h1></body></html>";
     struct stat sb;
     char *sndbuf, *filebuf;
 
     // obtiene el hostname a partir de una direccion IP dada
-    if (getnameinfo((struct sockaddr *)&clientaddr_in,
-                    sizeof(clientaddr_in), hostname, NI_MAXHOST, NULL, 0, 0))
+    if (getnameinfo((struct sockaddr*)&clientaddr_in,
+            sizeof(clientaddr_in), hostname, NI_MAXHOST, NULL, 0, 0))
         perror("getnameinfo\n");
 
     // obtiene la direccion IP en formato de texto
     if (inet_ntop(AF_INET, &(clientaddr_in.sin_addr), ipaddress,
-                  sizeof(ipaddress)) == NULL)
+            sizeof(ipaddress))
+        == NULL)
         perror("inet_ntop\n");
 
     time(&timevar);
@@ -344,32 +350,32 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
             bzero(buf, sizeof(buf));
             if (code == 501) {
                 snprintf(buf, sizeof(buf),
-                         "HTTP/1.1 501 Not Implemented\r\n"
-                         "Server: %s\r\n"
-                         "Connection: %s\r\n"
-                         "Content-Length: %zu\r\n"
-                         "\r\n"
-                         "%s",
-                         nombreserver, connection, strlen(notimplementedstr),
-                         notimplementedstr);
+                    "HTTP/1.1 501 Not Implemented\r\n"
+                    "Server: %s\r\n"
+                    "Connection: %s\r\n"
+                    "Content-Length: %zu\r\n"
+                    "\r\n"
+                    "%s",
+                    nombreserver, connection, strlen(notimplementedstr),
+                    notimplementedstr);
             } else if (code == 404) {
                 snprintf(buf, sizeof(buf),
-                         "HTTP/1.1 404 Not Found\r\n"
-                         "Server: %s\r\n"
-                         "Connection: %s\r\n"
-                         "Content-Length: %zu\r\n"
-                         "\r\n"
-                         "%s",
-                         nombreserver, connection, strlen(notfoundstr),
-                         notfoundstr);
+                    "HTTP/1.1 404 Not Found\r\n"
+                    "Server: %s\r\n"
+                    "Connection: %s\r\n"
+                    "Content-Length: %zu\r\n"
+                    "\r\n"
+                    "%s",
+                    nombreserver, connection, strlen(notfoundstr),
+                    notfoundstr);
             } else if (code == 200) {
                 snprintf(buf, sizeof(buf),
-                         "HTTP/1.1 200 OK\r\n"
-                         "Server: %s\r\n"
-                         "Connection: %s\r\n"
-                         "Content-Length: %zu\r\n"
-                         "\r\n",
-                         nombreserver, connection, strlen(filebuf));
+                    "HTTP/1.1 200 OK\r\n"
+                    "Server: %s\r\n"
+                    "Connection: %s\r\n"
+                    "Content-Length: %zu\r\n"
+                    "\r\n",
+                    nombreserver, connection, strlen(filebuf));
             }
 
             if (code == 200) {
@@ -394,17 +400,17 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
             strftime(timestr, sizeof(timestr), "[%d/%m/%y %X]", timetmp);
             if (code == 200) {
                 printf("%s %s: Peticion atendida correctamente\n",
-                       timestr, exename);
+                    timestr, exename);
             } else {
                 printf("%s %s: Peticion erronea. Codigo de error: %d\n",
-                       timestr, exename, code);
+                    timestr, exename, code);
             }
         }
 
         shutdown(sock, SHUT_RDWR);
         close(sock);
     } else {
-        char *tmpbuf;
+        char* tmpbuf;
 
         isTCP = 0;
         printf(
@@ -453,29 +459,29 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
         bzero(buf, sizeof(buf));
         if (code == 501) {
             snprintf(buf, sizeof(buf),
-                     "HTTP/1.1 501 Not Implemented\r\n"
-                     "Server: %s\r\n"
-                     "Content-Length: %zu\r\n"
-                     "\r\n"
-                     "%s",
-                     nombreserver, strlen(notimplementedstr),
-                     notimplementedstr);
+                "HTTP/1.1 501 Not Implemented\r\n"
+                "Server: %s\r\n"
+                "Content-Length: %zu\r\n"
+                "\r\n"
+                "%s",
+                nombreserver, strlen(notimplementedstr),
+                notimplementedstr);
         } else if (code == 404) {
             snprintf(buf, sizeof(buf),
-                     "HTTP/1.1 404 Not Found\r\n"
-                     "Server: %s\r\n"
-                     "Content-Length: %zu\r\n"
-                     "\r\n"
-                     "%s",
-                     nombreserver, strlen(notfoundstr),
-                     notfoundstr);
+                "HTTP/1.1 404 Not Found\r\n"
+                "Server: %s\r\n"
+                "Content-Length: %zu\r\n"
+                "\r\n"
+                "%s",
+                nombreserver, strlen(notfoundstr),
+                notfoundstr);
         } else if (code == 200) {
             snprintf(buf, sizeof(buf),
-                     "HTTP/1.1 200 OK\r\n"
-                     "Server: %s\r\n"
-                     "Content-Length: %zu\r\n"
-                     "\r\n",
-                     nombreserver, strlen(filebuf));
+                "HTTP/1.1 200 OK\r\n"
+                "Server: %s\r\n"
+                "Content-Length: %zu\r\n"
+                "\r\n",
+                nombreserver, strlen(filebuf));
         }
 
         if (code == 200) {
@@ -493,29 +499,31 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
                 pos = strlen(filebuf) + strlen(buf);
             }
             tmpbuf = realloc(sndbuf, pos);
-            if (tmpbuf == NULL) free(sndbuf);
+            if (tmpbuf == NULL)
+                free(sndbuf);
             n = sendto(sock, sndbuf, strlen(sndbuf), 0,
-                       (struct sockaddr *)&clientaddr_in,
-                       sizeof(struct sockaddr_in));
+                (struct sockaddr*)&clientaddr_in,
+                sizeof(struct sockaddr_in));
             while (pos == BUFFER_SIZE) {
                 // dar tiempo al cliente a leer
                 usleep(100000);
                 if (strlen(filebuf) - posbuf - BUFFER_SIZE * i > BUFFER_SIZE) {
                     strncpy(sndbuf, filebuf + posbuf + BUFFER_SIZE * i,
-                            BUFFER_SIZE);
+                        BUFFER_SIZE);
                     n = sendto(sock, sndbuf, strlen(sndbuf), 0,
-                               (struct sockaddr *)&clientaddr_in,
-                               sizeof(struct sockaddr_in));
+                        (struct sockaddr*)&clientaddr_in,
+                        sizeof(struct sockaddr_in));
                     i++;
                 } else {
                     pos = strlen(filebuf) - posbuf - BUFFER_SIZE * i;
                     strncpy(sndbuf, filebuf + posbuf + BUFFER_SIZE * i,
-                            pos + 1);
+                        pos + 1);
                     tmpbuf = realloc(sndbuf, pos + 1);
-                    if (tmpbuf == NULL) free(sndbuf);
+                    if (tmpbuf == NULL)
+                        free(sndbuf);
                     n = sendto(sock, sndbuf, strlen(sndbuf), 0,
-                               (struct sockaddr *)&clientaddr_in,
-                               sizeof(struct sockaddr_in));
+                        (struct sockaddr*)&clientaddr_in,
+                        sizeof(struct sockaddr_in));
                 }
             }
             close(fd);
@@ -530,8 +538,8 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
                 sndbuf = tmpbuf;
             }
             n = sendto(sock, sndbuf, strlen(sndbuf), 0,
-                       (struct sockaddr *)&clientaddr_in,
-                       sizeof(struct sockaddr_in));
+                (struct sockaddr*)&clientaddr_in,
+                sizeof(struct sockaddr_in));
         }
         if (n == -1) {
             perror(exename);
@@ -545,10 +553,10 @@ void server(int sock, struct sockaddr_in clientaddr_in, char *buffer) {
         strftime(timestr, sizeof(timestr), "[%d/%m/%y %X]", timetmp);
         if (code == 200) {
             printf("%s %s: Peticion atendida correctamente\n",
-                   timestr, exename);
+                timestr, exename);
         } else {
             printf("%s %s: Peticion erronea. Codigo de error: %d\n",
-                   timestr, exename, code);
+                timestr, exename, code);
         }
     }
 

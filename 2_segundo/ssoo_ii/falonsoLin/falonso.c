@@ -1,20 +1,20 @@
-#include <stdlib.h>
+#include "falonso.h"
+#include <errno.h>
+#include <signal.h>
 #include <stdio.h>
-#include <sys/sem.h>
+#include <stdlib.h>
 #include <sys/ipc.h>
+#include <sys/sem.h>
 #include <sys/shm.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <signal.h>
 #include <time.h>
-#include <errno.h>
 #include <unistd.h>
-#include "falonso.h"
 
 union semun {
     int val;
-    struct semid_ds *buf;
-    ushort_t *array;
+    struct semid_ds* buf;
+    ushort_t* array;
 };
 
 volatile sig_atomic_t fin = 0;
@@ -38,17 +38,15 @@ int comprobar_cruze_sig(int carril, int desp);
 int comprobar_esta_cruze(int carril, int desp);
 int comprobar_sig(int desp, int carril);
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     union semun sem;
     struct sembuf sops[2];
-    char *pzona;
+    char* pzona;
     int desp = 0, desp_antes, desp_cambio, desp_cambio2, desp_act,
-        carril = 0, carril_cambio, id, color, sig, contador = 0, cambio =
-        0, cruze = 0, espera_sem = 0, vel, ncoches, ret;
+        carril = 0, carril_cambio, id, color, sig, contador = 0, cambio = 0, cruze = 0, espera_sem = 0, vel, ncoches, ret;
     pid_t pidpadre;
-    int colores[] =
-        { NEGRO, ROJO, VERDE, AMARILLO, MAGENTA, CYAN, BLANCO };
+    int colores[] = { NEGRO, ROJO, VERDE, AMARILLO, MAGENTA, CYAN, BLANCO };
     int cambioCarril[137][2], i;
 
     for (i = 0; i < 137; i++) {
@@ -194,7 +192,7 @@ int main(int argc, char *argv[])
         kill(pidpadre, SIGINT);
         return 3;
     }
-    pzona = (char *) shmat(zonamemoria, 0, 0);
+    pzona = (char*)shmat(zonamemoria, 0, 0);
     for (i = 301; i < 350; i++)
         pzona[i] = 0;
 
@@ -226,8 +224,7 @@ int main(int argc, char *argv[])
                 semop(semaforo, sops, 1);
 
                 if (comprobar_esta_cruze(carril, desp)) {
-                    sops[0].sem_num =
-                        comprobar_esta_cruze(carril, desp) + 3;
+                    sops[0].sem_num = comprobar_esta_cruze(carril, desp) + 3;
                     sops[0].sem_op = -1;
                     sops[0].sem_flg = 0;
                     semop(semaforo, sops, 1);
@@ -316,36 +313,36 @@ int main(int argc, char *argv[])
 
     while (!fin) {
         // damos valores a variables que usaremos luego
-        sig = comprobar_sig(desp, carril);  // posicion siguiente
+        sig = comprobar_sig(desp, carril); // posicion siguiente
         desp_cambio = cambioCarril[desp][carril]; // posicion a la que se cambiaria
         carril_cambio = (carril == 0) ? 1 : 0; // carril opuesto al que esta
-        
-        // posición del coche antes de avanzar o cambiar de carril
+
+        // posiciï¿½n del coche antes de avanzar o cambiar de carril
         if (!carril)
             desp_antes = desp;
         else
             desp_antes = desp + 137;
-            
-        // posición a la que se cambiaría pero entre 0 y 136 para usarla luego con
-        // la función comprobar_sig
+
+        // posiciï¿½n a la que se cambiarï¿½a pero entre 0 y 136 para usarla luego con
+        // la funciï¿½n comprobar_sig
         if (carril_cambio)
-            desp_cambio2 = desp_cambio - 137; // 
+            desp_cambio2 = desp_cambio - 137; //
         else
             desp_cambio2 = desp_cambio;
 
-        // valores para saber si el coche está en el cruze, ha cambiado de carril
-        // o si ha pasado por el semáforo
+        // valores para saber si el coche estï¿½ en el cruze, ha cambiado de carril
+        // o si ha pasado por el semï¿½foro
         cruze = 0;
         cambio = 0;
         espera_sem = 0;
 
-        // si la posición siguiente está ocupada y la posición a la que se va a cambiar
-        // y la siguiente a ésta están vacías cambia de carril
+        // si la posiciï¿½n siguiente estï¿½ ocupada y la posiciï¿½n a la que se va a cambiar
+        // y la siguiente a ï¿½sta estï¿½n vacï¿½as cambia de carril
         if (pzona[sig] != ' ' && pzona[desp_cambio] == ' '
             && pzona[comprobar_sig(desp_cambio2, carril_cambio)] == ' ') {
             cambio = 1;
-            
-            // estos ifs son para no hacer un cambio de carril si el coche se 
+
+            // estos ifs son para no hacer un cambio de carril si el coche se
             // encuentra alrededor de la zona del cruze
             if (!carril) {
                 if ((desp > 19 && desp < 27)
@@ -358,9 +355,9 @@ int main(int argc, char *argv[])
             }
         }
 
-        // si el coche está en una posición anterior a un semáforo hace un wait
-        // sobre el semáforo correspondiente y cambia la variable espera_sem
-        // (después del avance_coche se hará un signal si esa variable es 1)
+        // si el coche estï¿½ en una posiciï¿½n anterior a un semï¿½foro hace un wait
+        // sobre el semï¿½foro correspondiente y cambia la variable espera_sem
+        // (despuï¿½s del avance_coche se harï¿½ un signal si esa variable es 1)
         if (!carril) {
             if (desp == 20) {
                 sops[0].sem_num = 280;
@@ -390,15 +387,15 @@ int main(int argc, char *argv[])
                 espera_sem = 1;
             }
         }
-        
+
         if (!cambio) {
             // comprobamos si el coche esta ahora mismo en el cruze
             cruze = comprobar_esta_cruze(carril, desp);
 
             // comprobamos si la posicion siguiente esta en el cruze
             if (comprobar_cruze_sig(carril, desp) != 0) {
-                // si está hace un wait a la vez sobre el semáforo de la posición siguiente
-                // y la posición que está en el mismo sitio que la cruza
+                // si estï¿½ hace un wait a la vez sobre el semï¿½foro de la posiciï¿½n siguiente
+                // y la posiciï¿½n que estï¿½ en el mismo sitio que la cruza
                 sops[0].sem_num = comprobar_cruze_sig(carril, desp) + 3;
                 sops[0].sem_op = -1;
                 sops[0].sem_flg = 0;
@@ -407,7 +404,7 @@ int main(int argc, char *argv[])
                 sops[1].sem_flg = 0;
                 semop(semaforo, sops, 2);
             } else {
-                // si no solo hace el wait sobre el semáforo de la posición siguiente
+                // si no solo hace el wait sobre el semï¿½foro de la posiciï¿½n siguiente
                 sops[0].sem_num = sig + 3;
                 sops[0].sem_op = -1;
                 sops[0].sem_flg = 0;
@@ -416,7 +413,7 @@ int main(int argc, char *argv[])
 
             avance_coche(&carril, &desp, color);
 
-            // si se ha hecho un wait sobre el semáforo correspondiente a un semáforo
+            // si se ha hecho un wait sobre el semï¿½foro correspondiente a un semï¿½foro
             // se hace el signal
             if (espera_sem) {
                 if (!carril) {
@@ -448,8 +445,8 @@ int main(int argc, char *argv[])
 
             if (cruze) {
                 // si el coche estaba en el cruze se hace un signal a la vez sobre
-                // el semáforo de la posición en la que estaba el coche y 
-                // la posición que cruzaba a ésta
+                // el semï¿½foro de la posiciï¿½n en la que estaba el coche y
+                // la posiciï¿½n que cruzaba a ï¿½sta
                 sops[0].sem_num = cruze + 3;
                 sops[0].sem_op = 1;
                 sops[0].sem_flg = 0;
@@ -458,8 +455,8 @@ int main(int argc, char *argv[])
                 sops[1].sem_flg = 0;
                 semop(semaforo, sops, 2);
             } else {
-                // si no estaba en el cruze se hace un signal sobre el semáforo
-                // de la posición en la que estaba el coche
+                // si no estaba en el cruze se hace un signal sobre el semï¿½foro
+                // de la posiciï¿½n en la que estaba el coche
                 sops[0].sem_num = desp_antes + 3;
                 sops[0].sem_op = 1;
                 sops[0].sem_flg = 0;
@@ -467,14 +464,14 @@ int main(int argc, char *argv[])
             }
         } else {
             // si la variable de cambio es verdadera se hace un wait sobre el
-            // semaforo de la posición a la que se va a cambiar...
+            // semaforo de la posiciï¿½n a la que se va a cambiar...
             sops[0].sem_num = desp_cambio + 3;
             sops[0].sem_op = -1;
             sops[0].sem_flg = 0;
             semop(semaforo, sops, 1);
             // se cambia de carril...
             cambio_carril(&carril, &desp, color) == -1;
-            // y se hace un signal sobre el semaforo de la posición en la que 
+            // y se hace un signal sobre el semaforo de la posiciï¿½n en la que
             // estaba el coche
             sops[0].sem_num = desp_antes + 3;
             sops[0].sem_op = 1;
@@ -484,12 +481,12 @@ int main(int argc, char *argv[])
 
         velocidad(vel, carril, desp);
 
-        // se incrementa la variable contadora de vueltas si el coche pasa por la posición
+        // se incrementa la variable contadora de vueltas si el coche pasa por la posiciï¿½n
         // indicada (y no se ha producido un cambio de carril para evitar contar
         // una vuelta por duplicado).
         // guardamos las vueltas de cada coche por separado porque cada celda de
         // la memoria compartida solo guarda valores hasta 127, si tuvieramos una para
-        // todos los coches haría overflow algo pronto con 20 coches
+        // todos los coches harï¿½a overflow algo pronto con 20 coches
         if (!cambio) {
             if (!carril && desp == 133)
                 pzona[301 + id]++;
@@ -501,9 +498,9 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// si el coche está en una posición anterior a una que está en el cruce 
-// devuelve la posición que cruza a la siguiente
-// (la que esta en el mismo sitio que la siguiente pero tiene otro número)
+// si el coche estï¿½ en una posiciï¿½n anterior a una que estï¿½ en el cruce
+// devuelve la posiciï¿½n que cruza a la siguiente
+// (la que esta en el mismo sitio que la siguiente pero tiene otro nï¿½mero)
 // si no devuelve falso
 int comprobar_cruze_sig(int carril, int desp)
 {
@@ -527,7 +524,7 @@ int comprobar_cruze_sig(int carril, int desp)
         return 0;
 }
 
-// lo mismo que la anterior pero para cuando la posición que se le pasa está en el cruze
+// lo mismo que la anterior pero para cuando la posiciï¿½n que se le pasa estï¿½ en el cruze
 // (no la siguiente)
 int comprobar_esta_cruze(int carril, int desp)
 {
@@ -551,7 +548,7 @@ int comprobar_esta_cruze(int carril, int desp)
         return 0;
 }
 
-// devuelve la posición siguiente a la que se le pasa
+// devuelve la posiciï¿½n siguiente a la que se le pasa
 int comprobar_sig(int desp, int carril)
 {
     if (desp == 136 && !carril)

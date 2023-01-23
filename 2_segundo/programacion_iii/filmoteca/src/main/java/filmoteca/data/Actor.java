@@ -17,11 +17,8 @@ class Actor extends Persona {
   }
 
   String actorToTable() {
-    return String.format(
-        "| %-20s | %-16s | %-15s | %-9s |",
-        getNombre(),
-        (getFechaNac() != null) ? getFechaNac() : NO_AVAILABLE,
-        getNacion(),
+    return String.format("| %-20s | %-16s | %-15s | %-9s |", getNombre(),
+        (getFechaNac() != null) ? getFechaNac() : NO_AVAILABLE, getNacion(),
         (getAnnoDebut() != null) ? getAnnoDebut() : NO_AVAILABLE);
   }
 

@@ -20,7 +20,7 @@ NO_LOCK_REQUIRED=true
 mkdir -p logs/besu
 
 # Build and run containers and network
-echo "docker-compose.yml" > ${LOCK_FILE}
+echo "docker-compose.yml" >${LOCK_FILE}
 
 echo "${bold}*************************************"
 echo "Quorum Dev Quickstart"
@@ -37,7 +37,6 @@ fi
 echo "Starting network..."
 docker-compose build --pull
 docker-compose up --detach
-
 
 #list services and endpoints
 ./list.sh

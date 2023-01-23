@@ -55,138 +55,138 @@ interface AllTripsGridProps {
 export function AllTripsGrid({
   data = [
     {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
-      {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
-      {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },    {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
-      {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
-      {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },    {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
-      {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
-      {
-        path: "tarjeta5.jpg",
-      },
-      {
-        path: "tarjeta4.jpg",
-      },
-      {
-        path: "tarjeta3.jpg",
-      },
-      {
-        path: "tarjeta2.jpg",
-      },
-      {
-        path: "tarjeta1.jpg",
-      },
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
+    {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
+    {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    }, {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
+    {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
+    {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    }, {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
+    {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
+    {
+      path: "tarjeta5.jpg",
+    },
+    {
+      path: "tarjeta4.jpg",
+    },
+    {
+      path: "tarjeta3.jpg",
+    },
+    {
+      path: "tarjeta2.jpg",
+    },
+    {
+      path: "tarjeta1.jpg",
+    },
   ],
 }: AllTripsGridProps) {
   const { classes } = useStyles();
@@ -196,31 +196,31 @@ export function AllTripsGrid({
   ));
 
   return (
-      <Container className={classes.wrapper}>
-        <Text
-          style={{
-            fontFamily: "Space Grotesk, sans-serif",
-            fontWeight: 700,
-            fontSize: "24px",
-            letterSpacing: "0.1em",
-            paddingTop: "24px",
-          }}
-        >
-          Todos los viajes
-        </Text>
+    <Container className={classes.wrapper}>
+      <Text
+        style={{
+          fontFamily: "Space Grotesk, sans-serif",
+          fontWeight: 700,
+          fontSize: "24px",
+          letterSpacing: "0.1em",
+          paddingTop: "24px",
+        }}
+      >
+        Todos los viajes
+      </Text>
 
-        <SimpleGrid
-          mt={10}
-          cols={4}
-          spacing={theme.spacing.lg}
-          breakpoints={[
-            { maxWidth: 980, cols: 3, spacing: "md" },
-            { maxWidth: 755, cols: 2, spacing: "sm" },
-            { maxWidth: 600, cols: 1, spacing: "sm" },
-          ]}
-        >
-          {features}
-        </SimpleGrid>
-      </Container>
+      <SimpleGrid
+        mt={10}
+        cols={4}
+        spacing={theme.spacing.lg}
+        breakpoints={[
+          { maxWidth: 980, cols: 3, spacing: "md" },
+          { maxWidth: 755, cols: 2, spacing: "sm" },
+          { maxWidth: 600, cols: 1, spacing: "sm" },
+        ]}
+      >
+        {features}
+      </SimpleGrid>
+    </Container>
   );
 }

@@ -16,8 +16,8 @@ NO_LOCK_REQUIRED=false
 . ./.env
 . ./.common.sh
 
-removeDockerImage(){
-  if [[ ! -z `docker ps -a | grep $1` ]]; then
+removeDockerImage() {
+  if [[ ! -z $(docker ps -a | grep $1) ]]; then
     docker image rm $1
   fi
 }
@@ -31,18 +31,18 @@ docker-compose down -v
 docker-compose rm -sfv
 
 if [ -f "docker-compose-deps.yml" ]; then
-    echo "Stopping dependencies..."
-    docker-compose -f docker-compose-deps.yml down -v
-    docker-compose rm -sfv
+  echo "Stopping dependencies..."
+  docker-compose -f docker-compose-deps.yml down -v
+  docker-compose rm -sfv
 fi
 # pet shop dapp
-if [[ ! -z `docker ps -a | grep quorum-dev-quickstart_pet_shop` ]]; then
+if [[ ! -z $(docker ps -a | grep quorum-dev-quickstart_pet_shop) ]]; then
   docker stop quorum-dev-quickstart_pet_shop
   docker rm quorum-dev-quickstart_pet_shop
   removeDockerImage quorum-dev-quickstart_pet_shop
 fi
 
-if grep -q 'kibana:' docker-compose.yml 2> /dev/null ; then
+if grep -q 'kibana:' docker-compose.yml 2>/dev/null; then
   docker image rm quorum-test-network_elasticsearch
   docker image rm quorum-test-network_logstash
   docker image rm quorum-test-network_filebeat

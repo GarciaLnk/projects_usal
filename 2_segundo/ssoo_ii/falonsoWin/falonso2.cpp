@@ -1,22 +1,22 @@
+#include "falonso2.h"
+#include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <Windows.h>
-#include "falonso2.h"
 
 HINSTANCE falonso2Dll;
 
 int (*FALONSO2_inicio)(int);
-int (*FALONSO2_fin)(int *);
+int (*FALONSO2_fin)(int*);
 int (*FALONSO2_luz_semAforo)(int, int);
-int (*FALONSO2_inicio_coche)(int *, int *, int);
-int (*FALONSO2_avance_coche)(int *, int *, int);
+int (*FALONSO2_inicio_coche)(int*, int*, int);
+int (*FALONSO2_avance_coche)(int*, int*, int);
 int (*FALONSO2_velocidad)(int, int, int);
-int (*FALONSO2_cambio_carril)(int *, int *, int);
+int (*FALONSO2_cambio_carril)(int*, int*, int);
 int (*FALONSO2_pausa)(void);
 int (*FALONSO2_estado_semAforo)(int);
 int (*FALONSO2_posiciOn_ocupada)(int, int);
-void (*pon_error)(const char *);
+void (*pon_error)(const char*);
 
 DWORD WINAPI funcionCoches(LPVOID iCoche);
 void cargarTablaCambioCarril();
@@ -34,7 +34,8 @@ HANDLE hTimer, mutex[274], sem[4];
 LONG lContador;
 int cambioCarril[137][2];
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[])
+{
     int nCoches, ret, i, iContador;
     int colores[] = { 0, 4, 2, 6, 5, 3, 7 };
     infoCoche iCoche[40];
@@ -50,90 +51,90 @@ int main(int argc, char *argv[]) {
         ExitProcess(0);
     }
 
-    pon_error = (void(*)(const char *)) GetProcAddress(falonso2Dll, "pon_error");
-     if (pon_error == NULL) {
+    pon_error = (void (*)(const char*))GetProcAddress(falonso2Dll, "pon_error");
+    if (pon_error == NULL) {
         printf("ERROR: GetProcAddress pon_error");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_inicio = (int(*)(int)) GetProcAddress(falonso2Dll, "FALONSO2_inicio");
+    FALONSO2_inicio = (int (*)(int))GetProcAddress(falonso2Dll, "FALONSO2_inicio");
     if (FALONSO2_inicio == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_inicio");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_fin = (int(*)(int *)) GetProcAddress(falonso2Dll, "FALONSO2_fin");
+    FALONSO2_fin = (int (*)(int*))GetProcAddress(falonso2Dll, "FALONSO2_fin");
     if (FALONSO2_fin == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_fin");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_luz_semAforo = (int(*)(int, int)) GetProcAddress(falonso2Dll, "FALONSO2_luz_semAforo");
+    FALONSO2_luz_semAforo = (int (*)(int, int))GetProcAddress(falonso2Dll, "FALONSO2_luz_semAforo");
     if (FALONSO2_luz_semAforo == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_luz_semAforo");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_inicio_coche = (int(*)(int *, int *, int)) GetProcAddress(falonso2Dll, "FALONSO2_inicio_coche");
+    FALONSO2_inicio_coche = (int (*)(int*, int*, int))GetProcAddress(falonso2Dll, "FALONSO2_inicio_coche");
     if (FALONSO2_inicio_coche == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_inicio_coche");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_avance_coche = (int(*)(int *, int *, int)) GetProcAddress(falonso2Dll, "FALONSO2_avance_coche");
+    FALONSO2_avance_coche = (int (*)(int*, int*, int))GetProcAddress(falonso2Dll, "FALONSO2_avance_coche");
     if (FALONSO2_avance_coche == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_avance_coche");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_velocidad = (int(*)(int, int, int)) GetProcAddress(falonso2Dll, "FALONSO2_velocidad");
+    FALONSO2_velocidad = (int (*)(int, int, int))GetProcAddress(falonso2Dll, "FALONSO2_velocidad");
     if (FALONSO2_velocidad == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_velocidad");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_cambio_carril = (int(*)(int *, int *, int)) GetProcAddress(falonso2Dll, "FALONSO2_cambio_carril");
+    FALONSO2_cambio_carril = (int (*)(int*, int*, int))GetProcAddress(falonso2Dll, "FALONSO2_cambio_carril");
     if (FALONSO2_cambio_carril == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_cambio_carril");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_pausa = (int(*)(void)) GetProcAddress(falonso2Dll, "FALONSO2_pausa");
+    FALONSO2_pausa = (int (*)(void))GetProcAddress(falonso2Dll, "FALONSO2_pausa");
     if (FALONSO2_pausa == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_pausa");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_estado_semAforo = (int(*)(int)) GetProcAddress(falonso2Dll, "FALONSO2_estado_semAforo");
+    FALONSO2_estado_semAforo = (int (*)(int))GetProcAddress(falonso2Dll, "FALONSO2_estado_semAforo");
     if (FALONSO2_estado_semAforo == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_estado_semAforo");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-    FALONSO2_posiciOn_ocupada = (int(*)(int, int)) GetProcAddress(falonso2Dll, "FALONSO2_posiciOn_ocupada");
+    FALONSO2_posiciOn_ocupada = (int (*)(int, int))GetProcAddress(falonso2Dll, "FALONSO2_posiciOn_ocupada");
     if (FALONSO2_posiciOn_ocupada == NULL) {
         pon_error("ERROR: GetProcAddress FALONSO2_posiciOn_ocupada");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
@@ -159,35 +160,35 @@ int main(int argc, char *argv[]) {
     hTimer = CreateWaitableTimer(NULL, TRUE, NULL);
     if (hTimer == NULL) {
         pon_error("ERROR al crear el temporizador");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
     sem[0] = CreateSemaphore(NULL, 0, nCoches, NULL);
     if (sem[0] == NULL) {
         pon_error("ERROR al crear sem[0]");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
     sem[1] = CreateSemaphore(NULL, 0, nCoches, NULL);
     if (sem[1] == NULL) {
         pon_error("ERROR al crear sem[1]");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
     sem[2] = CreateSemaphore(NULL, 1, 1, NULL);
-     if (sem[2] == NULL) {
+    if (sem[2] == NULL) {
         pon_error("ERROR al crear sem[2]");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
-   sem[3] = CreateSemaphore(NULL, 1, 1, NULL);
+    sem[3] = CreateSemaphore(NULL, 1, 1, NULL);
     if (sem[3] == NULL) {
         pon_error("ERROR al crear sem[3]");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
@@ -196,22 +197,21 @@ int main(int argc, char *argv[]) {
         mutex[i] = CreateMutex(NULL, FALSE, NULL);
         if (mutex[i] == NULL) {
             pon_error("ERROR al crear mutex");
-            if(FreeLibrary(falonso2Dll) == 0)
+            if (FreeLibrary(falonso2Dll) == 0)
                 printf("ERROR: No se pudo liberar la libreria");
             ExitProcess(0);
         }
     }
 
-    if(FALONSO2_inicio(ret) == -1) {
+    if (FALONSO2_inicio(ret) == -1) {
         pon_error("ERROR al iniciar el circuito");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
         ExitProcess(0);
     }
 
-
     for (i = 0; i < nCoches; i++) {
-        srand(i * 100 + (int) time(NULL));
+        srand(i * 100 + (int)time(NULL));
         iCoche[i].carril = i % 2;
         iCoche[i].desp = i;
         iCoche[i].color = colores[rand() % 7];
@@ -219,26 +219,25 @@ int main(int argc, char *argv[]) {
         coche[i] = CreateThread(NULL, 0, funcionCoches, &iCoche[i], 0, NULL);
         if (coche[i] == NULL) {
             pon_error("ERROR al crear el hilo de un coche");
-            if(FreeLibrary(falonso2Dll) == 0)
+            if (FreeLibrary(falonso2Dll) == 0)
                 printf("ERROR: No se pudo liberar la libreria");
             ExitProcess(0);
         }
-
     }
 
     for (i = 0; i < nCoches; i++)
         WaitForSingleObject(sem[0], INFINITE);
     FALONSO2_luz_semAforo(HORIZONTAL, VERDE);
     FALONSO2_luz_semAforo(VERTICAL, VERDE);
-    if(SetWaitableTimer(hTimer, &tiempoEspera, 0, NULL, NULL, 0) == 0) {
+    if (SetWaitableTimer(hTimer, &tiempoEspera, 0, NULL, NULL, 0) == 0) {
         pon_error("ERROR iniciar el temporizador");
-        if(FreeLibrary(falonso2Dll) == 0)
+        if (FreeLibrary(falonso2Dll) == 0)
             printf("ERROR: No se pudo liberar la libreria");
-        ExitProcess(0);    
+        ExitProcess(0);
     }
     ReleaseSemaphore(sem[1], nCoches, NULL);
-    
-    while(WaitForSingleObject(hTimer, 0) != WAIT_OBJECT_0) {
+
+    while (WaitForSingleObject(hTimer, 0) != WAIT_OBJECT_0) {
         FALONSO2_luz_semAforo(HORIZONTAL, AMARILLO);
         WaitForSingleObject(sem[2], INFINITE);
         FALONSO2_pausa();
@@ -264,17 +263,18 @@ int main(int argc, char *argv[]) {
 
     WaitForMultipleObjects(nCoches, coche, TRUE, INFINITE);
 
-    iContador = (int) lContador;
+    iContador = (int)lContador;
     FALONSO2_fin(&iContador);
 
-    if(FreeLibrary(falonso2Dll) == 0)
+    if (FreeLibrary(falonso2Dll) == 0)
         printf("ERROR: No se pudo liberar la libreria");
 
     ExitProcess(0);
 }
 
-DWORD WINAPI funcionCoches(LPVOID iCoche) {
-    infoCoche* piCoche = (infoCoche*) iCoche;
+DWORD WINAPI funcionCoches(LPVOID iCoche)
+{
+    infoCoche* piCoche = (infoCoche*)iCoche;
     int carril = piCoche->carril;
     int desp = piCoche->desp;
     int color = piCoche->color;
@@ -296,7 +296,7 @@ DWORD WINAPI funcionCoches(LPVOID iCoche) {
     ReleaseSemaphore(sem[0], 1, NULL);
     WaitForSingleObject(sem[1], INFINITE);
 
-    while(WaitForSingleObject(hTimer, 0) != WAIT_OBJECT_0) {
+    while (WaitForSingleObject(hTimer, 0) != WAIT_OBJECT_0) {
         despSig = (desp == 136) ? 0 : desp + 1;
         despAntes = desp;
         despCambio = cambioCarril[desp][carril];
@@ -307,7 +307,7 @@ DWORD WINAPI funcionCoches(LPVOID iCoche) {
         cambio = 0;
         cruce = comprobarCruce(carril, desp);
         semaforo = 0;
-        
+
         if (FALONSO2_posiciOn_ocupada(carril, despSig)
             && !FALONSO2_posiciOn_ocupada(carrilCambio, despCambio)
             && !FALONSO2_posiciOn_ocupada(carrilCambio, despSigCambio))
@@ -317,7 +317,7 @@ DWORD WINAPI funcionCoches(LPVOID iCoche) {
             semaforo = comprobarSemaforo(carril, despSig, cambio);
             cruceSig = comprobarCruce(carril, despSig);
 
-            if(semaforo)
+            if (semaforo)
                 WaitForSingleObject(sem[semaforo], INFINITE);
 
             if (cruceSig) {
@@ -334,7 +334,7 @@ DWORD WINAPI funcionCoches(LPVOID iCoche) {
             cruceCambio = comprobarCruce(carrilCambio, despCambio);
             semaforo = comprobarSemaforo(carrilCambio, despCambio, cambio);
 
-            if(semaforo)
+            if (semaforo)
                 WaitForSingleObject(sem[semaforo], INFINITE);
 
             if (cruceCambio) {
@@ -349,14 +349,14 @@ DWORD WINAPI funcionCoches(LPVOID iCoche) {
                 FALONSO2_cambio_carril(&carril, &desp, color);
         }
 
-        if(cruce) {
+        if (cruce) {
             ReleaseMutex(mutex[cruce]);
             ReleaseMutex(mutex[despAntes + 137 * carrilAntes]);
         } else {
             ReleaseMutex(mutex[despAntes + 137 * carrilAntes]);
         }
 
-        if(semaforo)
+        if (semaforo)
             ReleaseSemaphore(sem[semaforo], 1, NULL);
 
         if (!cambio) {
@@ -372,7 +372,8 @@ DWORD WINAPI funcionCoches(LPVOID iCoche) {
     ExitThread(0);
 }
 
-void cargarTablaCambioCarril() {
+void cargarTablaCambioCarril()
+{
     int i;
 
     for (i = 0; i < 137; i++) {

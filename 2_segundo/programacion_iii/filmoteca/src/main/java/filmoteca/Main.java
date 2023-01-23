@@ -18,14 +18,7 @@ final class Main {
       LogManager.getLogManager().getLogger("").setLevel(Level.WARNING);
     }
 
-    view.runMenu(
-        "\nFILMOTECA\n"
-            + "\n1) Archivos"
-            + "\n2) Películas"
-            + "\n3) Directores"
-            + "\n4) Actores"
-            + "\n5) Listados"
-            + "\ns) Salir"
-            + "\n\nSeleccione una opción: ");
+    view.runMenu("\nFILMOTECA\n" + "\n1) Archivos" + "\n2) Películas" + "\n3) Directores"
+        + "\n4) Actores" + "\n5) Listados" + "\ns) Salir" + "\n\nSeleccione una opción: ");
   }
 }

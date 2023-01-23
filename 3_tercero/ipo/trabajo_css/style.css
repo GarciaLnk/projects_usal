@@ -70,7 +70,7 @@ a:hover {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.btn + .btn {
+.btn+.btn {
   margin-left: 1rem;
 }
 
@@ -115,7 +115,8 @@ a:hover {
     padding: 0.75rem;
     font-size: 2.4rem;
   }
-  .btn + .btn {
+
+  .btn+.btn {
     margin-top: 1rem;
     margin-left: 0;
   }

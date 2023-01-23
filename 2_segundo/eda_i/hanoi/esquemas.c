@@ -3,7 +3,8 @@
 
 extern unsigned int contador;
 
-void hanoi(int n, int origen, int destino, int aux, int **torre, int tam) {
+void hanoi(int n, int origen, int destino, int aux, int** torre, int tam)
+{
     while (n > 0) {
         hanoi(n - 1, origen, aux, destino, torre, tam);
         if (!mover_disco(n, origen - 1, destino - 1, torre, tam)) {
@@ -19,7 +20,8 @@ void hanoi(int n, int origen, int destino, int aux, int **torre, int tam) {
 // Mueve un valor entero que representa un disco del array torre de origen al
 // de destino. Cada disco tiene un valor entre 1 y TAM, el 0 representa una
 // posicion vacia.
-int mover_disco(int disco, int origen, int destino, int **torre, int tam) {
+int mover_disco(int disco, int origen, int destino, int** torre, int tam)
+{
     int i, pos_orig = -1, pos_dest = -1;
 
     // Busqueda de la posicion en la torre de origen del disco a mover
@@ -42,8 +44,7 @@ int mover_disco(int disco, int origen, int destino, int **torre, int tam) {
     // Si el movimiento es erroneo se devuelve un codigo de error
     if (pos_orig < 0 || pos_dest < 0) {
         return -1;
-    } else if (pos_dest < tam - 1 &&
-               torre[pos_dest + 1][destino] < torre[pos_dest][destino]) {
+    } else if (pos_dest < tam - 1 && torre[pos_dest + 1][destino] < torre[pos_dest][destino]) {
         // El disco por debajo de la posicion final es menor que el movido
         return -2;
     } else {
@@ -54,7 +55,8 @@ int mover_disco(int disco, int origen, int destino, int **torre, int tam) {
     }
 }
 
-void intercambiar(int *x, int *y) {
+void intercambiar(int* x, int* y)
+{
     int temp;
 
     temp = *x;

@@ -33,17 +33,8 @@ class Pelicula implements Serializable {
     sinopsis = NO_AVAILABLE;
   }
 
-  Pelicula(
-      String titulo,
-      Integer anno,
-      Integer duracion,
-      String pais,
-      String guion,
-      String musica,
-      String fotografia,
-      String productora,
-      String genero,
-      String sinopsis) {
+  Pelicula(String titulo, Integer anno, Integer duracion, String pais, String guion, String musica,
+      String fotografia, String productora, String genero, String sinopsis) {
     this.titulo = titulo;
     this.anno = anno;
     this.duracion = duracion;
@@ -62,55 +53,27 @@ class Pelicula implements Serializable {
     return String.format(
         "<TR>" + campoHtml + campoHtml + campoHtml + campoHtml + campoHtml + campoHtml + campoHtml
             + campoHtml + campoHtml + campoHtml + campoHtml + campoHtml + "</TR>",
-        getTitulo(),
-        (getAnno() != null) ? getAnno() : NO_AVAILABLE,
-        (getDuracion() != null) ? getDuracion() + UNIDAD_DURACION : NO_AVAILABLE,
-        getPais(),
-        direccionToString(),
-        getGuion(),
-        getMusica(),
-        getFotografia(),
-        repartoToString(),
-        getProductora(),
-        getGenero(),
-        getSinopsis());
+        getTitulo(), (getAnno() != null) ? getAnno() : NO_AVAILABLE,
+        (getDuracion() != null) ? getDuracion() + UNIDAD_DURACION : NO_AVAILABLE, getPais(),
+        direccionToString(), getGuion(), getMusica(), getFotografia(), repartoToString(),
+        getProductora(), getGenero(), getSinopsis());
   }
 
   String peliculaInfo() {
     return String.format(
-        "%nTítulo: %s%n"
-            + "Año: %s%n"
-            + "Duración: %s%n"
-            + "País: %s%n"
-            + "Dirección: %s%n"
-            + "Guion: %s%n"
-            + "Música: %s%n"
-            + "Fotografía: %s%n"
-            + "Reparto: %s%n"
-            + "Productora: %s%n"
-            + "Género: %s%n"
-            + "Sinopsis: %s",
-        getTitulo(),
-        (getAnno() != null) ? getAnno() : NO_AVAILABLE,
-        (getDuracion() != null) ? getDuracion() + UNIDAD_DURACION : NO_AVAILABLE,
-        getPais(),
-        direccionToString(),
-        getGuion(),
-        getMusica(),
-        getFotografia(),
-        repartoToString(),
-        getProductora(),
-        getGenero(),
-        getSinopsis());
+        "%nTítulo: %s%n" + "Año: %s%n" + "Duración: %s%n" + "País: %s%n" + "Dirección: %s%n"
+            + "Guion: %s%n" + "Música: %s%n" + "Fotografía: %s%n" + "Reparto: %s%n"
+            + "Productora: %s%n" + "Género: %s%n" + "Sinopsis: %s",
+        getTitulo(), (getAnno() != null) ? getAnno() : NO_AVAILABLE,
+        (getDuracion() != null) ? getDuracion() + UNIDAD_DURACION : NO_AVAILABLE, getPais(),
+        direccionToString(), getGuion(), getMusica(), getFotografia(), repartoToString(),
+        getProductora(), getGenero(), getSinopsis());
   }
 
   String peliculaToTable() {
-    return String.format(
-        "| %-65s | %-4s | %-8s | %-25s | %-15s |",
-        getTitulo(),
+    return String.format("| %-65s | %-4s | %-8s | %-25s | %-15s |", getTitulo(),
         (getAnno() != null) ? getAnno() : NO_AVAILABLE,
-        (getDuracion() != null) ? getDuracion() + UNIDAD_DURACION : NO_AVAILABLE,
-        getPais(),
+        (getDuracion() != null) ? getDuracion() + UNIDAD_DURACION : NO_AVAILABLE, getPais(),
         getGenero());
   }
 

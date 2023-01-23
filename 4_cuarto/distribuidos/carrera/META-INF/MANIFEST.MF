@@ -15,4 +15,3 @@ Class-Path: lib/jakarta.ws.rs-api-2.1.6.jar
  lib/jersey-common.jar lib/jersey-container-servlet.jar lib/jersey-hk2.jar 
  lib/jersey-media-jaxb.jar lib/jersey-media-json-binding.jar 
  lib/jersey-media-sse.jar lib/jersey-server.jar
-

@@ -2,8 +2,8 @@
  * Alberto Garcia Martin
  *
  *     TORRES DE HANOI
- *	
- *     |       |       | 
+ *
+ *     |       |       |
  *     O       |       |
  *    OOO      |       |
  *   OOOOO     |       |
@@ -20,10 +20,11 @@
 
 unsigned int contador;
 
-int main() {
+int main()
+{
     int i, num_discos, salir;
     char lect[3];
-    int **torre;
+    int** torre;
 
     do {
         printf("\n\tTORRES DE HANOI\n");

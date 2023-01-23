@@ -82,7 +82,7 @@ export function Register() {
   };
 
   return (
-    <Container size={420} style={{position:"relative",top: "40px"}}>
+    <Container size={420} style={{ position: "relative", top: "40px" }}>
       <Title
         align="center"
         sx={(theme) => ({

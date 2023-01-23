@@ -1,23 +1,26 @@
 ﻿<Window x:Class="ControlCalorias.AddCalorias"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ControlCalorias.Controls"
-        mc:Ignorable="d"
-        Title="Modificar Calorias" Height="150" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ControlCalorias.Controls"
+    mc:Ignorable="d"
+    Title="Modificar Calorias" Height="150" Width="300" ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <local:NumericTextBox Grid.ColumnSpan="2" x:Name="TextBoxCalorias"/>
-        <Button Grid.Column="0" Grid.Row="1" Margin="10" Content="Confirmar" Click="ButtonConfirmCalorias_Click" IsDefault="True"/>
-        <Button Grid.Column="1" Grid.Row="1" Margin="10" Content="Cancelar" Click="ButtonCancelCalorias_Click" IsCancel="True"/>
+        <local:NumericTextBox Grid.ColumnSpan="2" x:Name="TextBoxCalorias" />
+        <Button Grid.Column="0" Grid.Row="1" Margin="10" Content="Confirmar"
+            Click="ButtonConfirmCalorias_Click" IsDefault="True" />
+        <Button Grid.Column="1" Grid.Row="1" Margin="10" Content="Cancelar"
+            Click="ButtonCancelCalorias_Click" IsCancel="True" />
     </Grid>
 </Window>

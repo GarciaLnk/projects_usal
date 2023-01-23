@@ -19,15 +19,15 @@ function derivePublicKey(privKey) {
   let pubKey = secp256k1.publicKeyCreate(privKey, false).slice(1)
   return Buffer.from(pubKey)
 }
-  
+
 function deriveAddress(pubKey) {
-  if(!Buffer.isBuffer(pubKey)) {
+  if (!Buffer.isBuffer(pubKey)) {
     console.log("ERROR - pubKey is not a buffer")
   }
   let keyHash = keccak('keccak256').update(pubKey).digest()
   return keyHash.slice(Math.max(keyHash.length - 20, 1))
 }
-  
+
 function generateNodeData() {
   let privateKey = generatePrivateKey()
   let publicKey = derivePublicKey(privateKey)

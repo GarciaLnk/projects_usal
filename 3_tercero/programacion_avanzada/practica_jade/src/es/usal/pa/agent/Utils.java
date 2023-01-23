@@ -19,12 +19,12 @@ public class Utils {
   /**
    * Permite buscar a todos los agentes que implementa un servicio de un tipo dado
    * 
-   * @param agent Agente con el que se realiza la búsqueda
+   * @param agent Agente con el que se realiza la bï¿½squeda
    * @param tipo Tipo de servidio buscado
    * @return Listado de agentes que proporciona el servicio
    */
   protected static DFAgentDescription[] buscarAgentes(Agent agent, String tipo) {
-    // indico las características el tipo de servicio que quiero encontrar
+    // indico las caracterï¿½sticas el tipo de servicio que quiero encontrar
     DFAgentDescription template = new DFAgentDescription();
     ServiceDescription templateSd = new ServiceDescription();
     // como define el tipo el agente coordinador tambien podriamos buscar por nombre
@@ -47,7 +47,7 @@ public class Utils {
 
 
   /**
-   * Envía un objeto desde el agent eindicado a un agent eque proporciona un servicio del tipo dado
+   * Envï¿½a un objeto desde el agent eindicado a un agent eque proporciona un servicio del tipo dado
    * 
    * @param agent Agente desde el que se va a enviar el servicio
    * @param tipo Tipo del servicio buscado
@@ -87,12 +87,12 @@ public class Utils {
    * Permite buscar los agents que dan un servicio de un determinado tipo. Devuelve el primero de
    * ellos.
    * 
-   * @param agent Agentes desde el que se realiza la búsqueda
+   * @param agent Agentes desde el que se realiza la bï¿½squeda
    * @param tipo Tipo de servicio buscado
    * @return Primer agente que proporciona el servicio
    */
   protected static DFAgentDescription buscarAgente(Agent agent, String tipo) {
-    // indico las características el tipo de servicio que quiero encontrar
+    // indico las caracterï¿½sticas el tipo de servicio que quiero encontrar
     DFAgentDescription template = new DFAgentDescription();
     ServiceDescription templateSd = new ServiceDescription();
     // como define el tipo el agente coordinador tamiben podriamos buscar por nombre

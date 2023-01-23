@@ -21,8 +21,7 @@ public class Controller {
     if (!model.loadDirectoresFromBin(model.getPathDirectoresBin())) {
       LOGGER.log(Level.INFO, "se importará directores.txt");
       if (!model.importDirectoresFromTxt(model.getPathDirectoresTxt())) {
-        LOGGER.log(
-            Level.WARNING,
+        LOGGER.log(Level.WARNING,
             "no se ha encontrado ningún archivo desde el que importar los directores");
       }
     }
@@ -30,16 +29,15 @@ public class Controller {
     if (!model.loadActoresFromBin(model.getPathActoresBin())) {
       LOGGER.log(Level.INFO, "se importará directores.txt");
       if (!model.importActoresFromTxt(model.getPathActoresTxt())) {
-        LOGGER.log(
-            Level.WARNING, "no se ha encontrado ningún archivo desde el que importar los actores");
+        LOGGER.log(Level.WARNING,
+            "no se ha encontrado ningún archivo desde el que importar los actores");
       }
     }
 
     if (!model.loadPeliculasFromBin(model.getPathPeliculasBin())) {
       LOGGER.log(Level.INFO, "se importará peliculas.txt");
       if (!model.importPeliculasFromTxt(model.getPathPeliculasTxt())) {
-        LOGGER.log(
-            Level.WARNING,
+        LOGGER.log(Level.WARNING,
             "no se ha encontrado ningún archivo desde el que importar las películas");
       }
     }
@@ -59,34 +57,11 @@ public class Controller {
     model.exportPeliculasToHtml();
   }
 
-  public void darAltaPelicula(
-      String titulo,
-      Integer anno,
-      Integer duracion,
-      String pais,
-      String direccion,
-      String guion,
-      String musica,
-      String fotografia,
-      String reparto,
-      String productora,
-      String genero,
-      String sinopsis,
-      String delim) {
-    model.darAltaPelicula(
-        titulo,
-        anno,
-        duracion,
-        pais,
-        direccion,
-        guion,
-        musica,
-        fotografia,
-        reparto,
-        productora,
-        genero,
-        sinopsis,
-        delim);
+  public void darAltaPelicula(String titulo, Integer anno, Integer duracion, String pais,
+      String direccion, String guion, String musica, String fotografia, String reparto,
+      String productora, String genero, String sinopsis, String delim) {
+    model.darAltaPelicula(titulo, anno, duracion, pais, direccion, guion, musica, fotografia,
+        reparto, productora, genero, sinopsis, delim);
   }
 
   public boolean darBajaPelicula(String titulo) {
@@ -137,13 +112,8 @@ public class Controller {
     return model.getStringPeli(titulo);
   }
 
-  public void darAltaDirector(
-      String nombre,
-      LocalDate fechaNac,
-      String nacion,
-      String ocupacion,
-      String peliculas,
-      String delim) {
+  public void darAltaDirector(String nombre, LocalDate fechaNac, String nacion, String ocupacion,
+      String peliculas, String delim) {
     model.darAltaDirector(nombre, fechaNac, nacion, ocupacion, peliculas, delim);
   }
 
@@ -167,13 +137,8 @@ public class Controller {
     model.setOcupacionDire(nombre, ocupacion);
   }
 
-  public void darAltaActor(
-      String nombre,
-      LocalDate fechaNac,
-      String nacion,
-      Integer annoDebut,
-      String peliculas,
-      String delim) {
+  public void darAltaActor(String nombre, LocalDate fechaNac, String nacion, Integer annoDebut,
+      String peliculas, String delim) {
     model.darAltaActor(nombre, fechaNac, nacion, annoDebut, peliculas, delim);
   }
 

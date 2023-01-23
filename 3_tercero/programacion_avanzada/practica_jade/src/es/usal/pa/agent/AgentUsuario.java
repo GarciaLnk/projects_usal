@@ -56,13 +56,13 @@ public class AgentUsuario extends Agent {
               System.out.printf("Parada: %d Llegada: %.1f\n", paradaRecorrido.getParada(),
                   recorrido.getHora());
             } else {
-              System.out.printf("Parada: %d Coger Línea: %d Hora: %.1f\n",
+              System.out.printf("Parada: %d Coger Lï¿½nea: %d Hora: %.1f\n",
                   paradaRecorrido.getParada(), paradaRecorrido.getLlegadaLinea().getLinea(),
                   paradaRecorrido.getLlegadaLinea().getHora());
             }
           }
         } catch (NumberFormatException e) {
-          System.out.println("Por favor introduzca datos válidos");
+          System.out.println("Por favor introduzca datos vï¿½lidos");
         } catch (UnreadableException e) {
           e.printStackTrace();
         }

@@ -43,8 +43,7 @@ public class Model {
 
   public Path getPathFilmoteca() {
     return FileSystems.getDefault()
-        .getPath(
-            System.getProperty("user.home"),
+        .getPath(System.getProperty("user.home"),
             File.separator + "Desktop" + File.separator + filmoteca.getNombreCarpeta())
         .toAbsolutePath();
   }
@@ -78,15 +77,8 @@ public class Model {
   }
 
   private Path pathDesktopFolderFile(String nombreCarpeta, String nombreArchivo) {
-    return FileSystems.getDefault()
-        .getPath(
-            System.getProperty("user.home"),
-            File.separator
-                + "Desktop"
-                + File.separator
-                + nombreCarpeta
-                + File.separator
-                + nombreArchivo);
+    return FileSystems.getDefault().getPath(System.getProperty("user.home"), File.separator
+        + "Desktop" + File.separator + nombreCarpeta + File.separator + nombreArchivo);
   }
 
   public boolean importPeliculasFromTxt(Path pathPeliculasTxt) {
@@ -108,20 +100,9 @@ public class Model {
         String[] campo = splitLine(s);
 
         try {
-          filmoteca.crearPelicula(
-              campo[0],
-              parseInteger(campo[1]),
-              parseInteger(campo[2]),
-              campo[3],
-              campo[4],
-              campo[5],
-              campo[6],
-              campo[7],
-              campo[8],
-              campo[9],
-              campo[10],
-              campo[11],
-              "\t");
+          filmoteca.crearPelicula(campo[0], parseInteger(campo[1]), parseInteger(campo[2]),
+              campo[3], campo[4], campo[5], campo[6], campo[7], campo[8], campo[9], campo[10],
+              campo[11], "\t");
         } catch (ArrayIndexOutOfBoundsException ex) {
           LOGGER.log(Level.INFO, String.format("película: la línea \"%s\" está malformada", s));
         }
@@ -150,8 +131,8 @@ public class Model {
         String[] campo = splitLine(s);
 
         try {
-          filmoteca.crearDirector(
-              campo[0], parseDate(campo[1]), campo[2], campo[3], campo[4], "\t");
+          filmoteca.crearDirector(campo[0], parseDate(campo[1]), campo[2], campo[3], campo[4],
+              "\t");
         } catch (ArrayIndexOutOfBoundsException ex) {
           LOGGER.log(Level.INFO, String.format("director: la línea \"%s\" está malformada", s));
         }
@@ -180,8 +161,8 @@ public class Model {
         String[] campo = splitLine(s);
 
         try {
-          filmoteca.crearActor(
-              campo[0], parseDate(campo[1]), campo[2], parseInteger(campo[3]), campo[4], "\t");
+          filmoteca.crearActor(campo[0], parseDate(campo[1]), campo[2], parseInteger(campo[3]),
+              campo[4], "\t");
         } catch (ArrayIndexOutOfBoundsException ex) {
           LOGGER.log(Level.INFO, String.format("actor: la línea \"%s\" está malformada", s));
         }
@@ -330,9 +311,8 @@ public class Model {
       PrivateKey privKeyActores = createPrivateKey("Actores");
       SignedObject soPeliculas =
           new SignedObject((ArrayList<Pelicula>) filmoteca.getPeliculas(), privKeyPeliculas, sign);
-      SignedObject soDirectores =
-          new SignedObject(
-              (ArrayList<Director>) filmoteca.getDirectores(), privKeyDirectores, sign);
+      SignedObject soDirectores = new SignedObject((ArrayList<Director>) filmoteca.getDirectores(),
+          privKeyDirectores, sign);
       SignedObject soActores =
           new SignedObject((ArrayList<Actor>) filmoteca.getActores(), privKeyActores, sign);
 
@@ -364,8 +344,8 @@ public class Model {
       KeyFactory kf = KeyFactory.getInstance("RSA");
       return kf.generatePublic(spec);
     } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-      LOGGER.log(
-          Level.INFO, "no se pudo cargar la clave pública, se ignorara el archivo binario", e);
+      LOGGER.log(Level.INFO, "no se pudo cargar la clave pública, se ignorara el archivo binario",
+          e);
       return null;
     }
   }
@@ -374,43 +354,23 @@ public class Model {
     File filePeliculasHtml =
         pathDesktopFolderFile(filmoteca.getNombreCarpeta(), Filmoteca.HTML_PELICULAS).toFile();
 
-    try (PrintWriter pw =
-        new PrintWriter(
-            new OutputStreamWriter(
-                new FileOutputStream(filePeliculasHtml), StandardCharsets.UTF_8))) {
-      String style =
-          "<style>\n"
-              + "#peliculas {\n"
-              + "  font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;\n"
-              + "  border-collapse: collapse;\n"
-              + "  width: 100%;\n"
-              + "}\n"
-              + "\n"
-              + "#peliculas td, #peliculas th {\n"
-              + "  border: 1px solid #ddd;\n"
-              + "  padding: 8px;\n"
-              + "}\n"
-              + "\n"
-              + "#peliculas tr:nth-child(even){background-color: #f2f2f2;}\n"
-              + "\n"
-              + "#peliculas tr:hover {background-color: #ddd;}\n"
-              + "\n"
-              + "#peliculas th {\n"
-              + "  padding-top: 12px;\n"
-              + "  padding-bottom: 12px;\n"
-              + "  text-align: left;\n"
-              + "  background-color: #4CAF50;\n"
-              + "  color: white;\n"
-              + "}\n"
-              + "</style>\n";
+    try (PrintWriter pw = new PrintWriter(
+        new OutputStreamWriter(new FileOutputStream(filePeliculasHtml), StandardCharsets.UTF_8))) {
+      String style = "<style>\n" + "#peliculas {\n"
+          + "  font-family: \"Trebuchet MS\", Arial, Helvetica, sans-serif;\n"
+          + "  border-collapse: collapse;\n" + "  width: 100%;\n" + "}\n" + "\n"
+          + "#peliculas td, #peliculas th {\n" + "  border: 1px solid #ddd;\n" + "  padding: 8px;\n"
+          + "}\n" + "\n" + "#peliculas tr:nth-child(even){background-color: #f2f2f2;}\n" + "\n"
+          + "#peliculas tr:hover {background-color: #ddd;}\n" + "\n" + "#peliculas th {\n"
+          + "  padding-top: 12px;\n" + "  padding-bottom: 12px;\n" + "  text-align: left;\n"
+          + "  background-color: #4CAF50;\n" + "  color: white;\n" + "}\n" + "</style>\n";
       pw.printf("<!DOCTYPE html>%n");
       pw.printf("<HTML>%n<HEAD><meta charset=\"UTF-8\"><title>PELÍCULAS</title></HEAD>%n<BODY>%n");
       pw.printf("<table id=\"peliculas\">%n");
       pw.println(style);
-      pw.printf(
-          "<TR><TH>TÍTULO</TH><TH>AÑO</TH><TH>DURACIÓN</TH><TH>PAÍS</TH><TH>DIRECCIÓN</TH>"
-              + "<TH>GUION</TH><TH>MÚSICA</TH><TH>FOTOGRAFÍA</TH><TH>REPARTO</TH>"
-              + "<TH>PRODUCTORA</TH><TH>GÉNERO</TH><TH>SINOPSIS</TH></TR>%n");
+      pw.printf("<TR><TH>TÍTULO</TH><TH>AÑO</TH><TH>DURACIÓN</TH><TH>PAÍS</TH><TH>DIRECCIÓN</TH>"
+          + "<TH>GUION</TH><TH>MÚSICA</TH><TH>FOTOGRAFÍA</TH><TH>REPARTO</TH>"
+          + "<TH>PRODUCTORA</TH><TH>GÉNERO</TH><TH>SINOPSIS</TH></TR>%n");
 
       for (Pelicula p : filmoteca.getPeliculas()) {
         pw.printf("%s%n", p.peliculaToHtml());
@@ -427,10 +387,8 @@ public class Model {
     File fileDirectoresCol =
         pathDesktopFolderFile(filmoteca.getNombreCarpeta(), Filmoteca.COL_DIRECTORES).toFile();
 
-    try (PrintWriter pw =
-        new PrintWriter(
-            new OutputStreamWriter(
-                new FileOutputStream(fileDirectoresCol), StandardCharsets.UTF_8))) {
+    try (PrintWriter pw = new PrintWriter(
+        new OutputStreamWriter(new FileOutputStream(fileDirectoresCol), StandardCharsets.UTF_8))) {
       pw.printf("NOMBRE\tFECHA DE NACIMIENTO\tNACIONALIDAD\tOCUPACIÓN\tPELÍCULAS%n");
 
       for (Director d : filmoteca.getDirectores()) {
@@ -441,34 +399,11 @@ public class Model {
     }
   }
 
-  public void darAltaPelicula(
-      String titulo,
-      Integer anno,
-      Integer duracion,
-      String pais,
-      String direccion,
-      String guion,
-      String musica,
-      String fotografia,
-      String reparto,
-      String productora,
-      String genero,
-      String sinopsis,
-      String delim) {
-    filmoteca.crearPelicula(
-        titulo,
-        anno,
-        duracion,
-        pais,
-        direccion,
-        guion,
-        musica,
-        fotografia,
-        reparto,
-        productora,
-        genero,
-        sinopsis,
-        delim);
+  public void darAltaPelicula(String titulo, Integer anno, Integer duracion, String pais,
+      String direccion, String guion, String musica, String fotografia, String reparto,
+      String productora, String genero, String sinopsis, String delim) {
+    filmoteca.crearPelicula(titulo, anno, duracion, pais, direccion, guion, musica, fotografia,
+        reparto, productora, genero, sinopsis, delim);
   }
 
   public boolean darBajaPelicula(String titulo) {
@@ -529,13 +464,8 @@ public class Model {
     return peliculaBuscada.peliculaInfo();
   }
 
-  public void darAltaDirector(
-      String nombre,
-      LocalDate fechaNac,
-      String nacion,
-      String ocupacion,
-      String peliculas,
-      String delim) {
+  public void darAltaDirector(String nombre, LocalDate fechaNac, String nacion, String ocupacion,
+      String peliculas, String delim) {
     filmoteca.crearDirector(nombre, fechaNac, nacion, ocupacion, peliculas, delim);
   }
 
@@ -562,13 +492,8 @@ public class Model {
     directorBuscado.setOcupacion(ocupacion);
   }
 
-  public void darAltaActor(
-      String nombre,
-      LocalDate fechaNac,
-      String nacion,
-      Integer annoDebut,
-      String peliculas,
-      String delim) {
+  public void darAltaActor(String nombre, LocalDate fechaNac, String nacion, Integer annoDebut,
+      String peliculas, String delim) {
     filmoteca.crearActor(nombre, fechaNac, nacion, annoDebut, peliculas, delim);
   }
 
@@ -599,18 +524,17 @@ public class Model {
     List<Pelicula> peliculasActor =
         filmoteca.buscarActor(nombre, filmoteca.getActores()).getPeliculas();
 
-    peliculasActor.sort(
-        (a, b) -> {
-          Integer annoA = a.getAnno();
-          Integer annoB = b.getAnno();
-          Integer checkRes = checkNull(annoA, annoB);
+    peliculasActor.sort((a, b) -> {
+      Integer annoA = a.getAnno();
+      Integer annoB = b.getAnno();
+      Integer checkRes = checkNull(annoA, annoB);
 
-          if (checkRes != null) {
-            return checkRes;
-          }
+      if (checkRes != null) {
+        return checkRes;
+      }
 
-          return annoA.compareTo(annoB);
-        });
+      return annoA.compareTo(annoB);
+    });
 
     return filmoteca.getPeliculasAsTable(peliculasActor);
   }
@@ -626,31 +550,29 @@ public class Model {
   public String getDirectoresAsTable() {
     List<Director> directores = filmoteca.getDirectores();
 
-    directores.sort(
-        (a, b) -> {
-          LocalDate fechaA = a.getFechaNac();
-          LocalDate fechaB = b.getFechaNac();
-          Integer checkRes = checkNull(fechaA, fechaB);
+    directores.sort((a, b) -> {
+      LocalDate fechaA = a.getFechaNac();
+      LocalDate fechaB = b.getFechaNac();
+      Integer checkRes = checkNull(fechaA, fechaB);
 
-          if (checkRes != null) {
-            return checkRes;
-          }
+      if (checkRes != null) {
+        return checkRes;
+      }
 
-          return fechaA.compareTo(fechaB);
-        });
+      return fechaA.compareTo(fechaB);
+    });
 
-    directores.sort(
-        (a, b) -> {
-          String nacionA = a.getNacion();
-          String nacionB = b.getNacion();
+    directores.sort((a, b) -> {
+      String nacionA = a.getNacion();
+      String nacionB = b.getNacion();
 
-          if (nacionA.equals(NO_AVAILABLE)) {
-            return 1;
-          } else if (nacionB.equals(NO_AVAILABLE)) {
-            return -1;
-          }
-          return nacionA.compareToIgnoreCase(nacionB);
-        });
+      if (nacionA.equals(NO_AVAILABLE)) {
+        return 1;
+      } else if (nacionB.equals(NO_AVAILABLE)) {
+        return -1;
+      }
+      return nacionA.compareToIgnoreCase(nacionB);
+    });
 
     return filmoteca.getDirectoresAsTable();
   }
@@ -660,18 +582,17 @@ public class Model {
 
     actores.sort((a, b) -> a.getNombre().compareToIgnoreCase(b.getNombre()));
 
-    actores.sort(
-        (a, b) -> {
-          Integer annoDebutA = a.getAnnoDebut();
-          Integer annoDebutB = b.getAnnoDebut();
-          Integer checkRes = checkNull(annoDebutA, annoDebutB);
+    actores.sort((a, b) -> {
+      Integer annoDebutA = a.getAnnoDebut();
+      Integer annoDebutB = b.getAnnoDebut();
+      Integer checkRes = checkNull(annoDebutA, annoDebutB);
 
-          if (checkRes != null) {
-            return checkRes;
-          }
+      if (checkRes != null) {
+        return checkRes;
+      }
 
-          return annoDebutA.compareTo(annoDebutB);
-        });
+      return annoDebutA.compareTo(annoDebutB);
+    });
 
     return filmoteca.getActoresAsTable();
   }

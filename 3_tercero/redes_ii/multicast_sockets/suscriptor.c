@@ -18,11 +18,13 @@
 
 volatile sig_atomic_t stop;
 
-void stophandler() {
+void stophandler()
+{
     stop = 1;
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const* argv[])
+{
     struct sigaction sint;
     struct sockaddr_in6 multi_addr, emisor_addr;
     struct ipv6_mreq mreq;
@@ -49,8 +51,8 @@ int main(int argc, char const *argv[]) {
     }
 
     // pone a cero la estructura de la direccion del socket
-    memset((char *)&multi_addr, 0, sizeof(multi_addr));
-    memset((char *)&emisor_addr, 0, sizeof(emisor_addr));
+    memset((char*)&multi_addr, 0, sizeof(multi_addr));
+    memset((char*)&emisor_addr, 0, sizeof(emisor_addr));
 
     // crea el socket IPv6 y UDP
     if ((sock = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
@@ -70,7 +72,7 @@ int main(int argc, char const *argv[]) {
     }
 
     // hace bind sobre el socket
-    if (bind(sock, (const struct sockaddr *)&multi_addr, sizeof(multi_addr)) < 0) {
+    if (bind(sock, (const struct sockaddr*)&multi_addr, sizeof(multi_addr)) < 0) {
         perror("error al hacer el bind\n");
         exit(-1);
     }
@@ -108,7 +110,7 @@ int main(int argc, char const *argv[]) {
 
     stop = 0;
     while (!stop) {
-        int n = recvfrom(sock, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&emisor_addr, (socklen_t *)&addrlen);
+        int n = recvfrom(sock, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&emisor_addr, (socklen_t*)&addrlen);
         if (n == -1) {
             perror("error al hacer recvfrom\n");
             exit(1);

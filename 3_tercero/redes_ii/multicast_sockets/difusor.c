@@ -22,11 +22,13 @@
 
 volatile sig_atomic_t stop;
 
-void stophandler() {
+void stophandler()
+{
     stop = 1;
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const* argv[])
+{
     struct sigaction sint;
     struct sockaddr_in6 multi_addr, my_addr;
     int if_indice, sock;
@@ -66,8 +68,8 @@ int main(int argc, char const *argv[]) {
     }
 
     // pone a cero la estructura de la direccion del socket
-    memset((char *)&multi_addr, 0, sizeof(multi_addr));
-    memset((char *)&my_addr, 0, sizeof(my_addr));
+    memset((char*)&multi_addr, 0, sizeof(multi_addr));
+    memset((char*)&my_addr, 0, sizeof(my_addr));
 
     // crea el socket IPv6 y UDP
     if ((sock = socket(AF_INET6, SOCK_DGRAM, 0)) < 0) {
@@ -91,7 +93,7 @@ int main(int argc, char const *argv[]) {
     }
 
     // hacer bind sobre el socket
-    if (bind(sock, (const struct sockaddr *)&my_addr, sizeof(my_addr)) < 0) {
+    if (bind(sock, (const struct sockaddr*)&my_addr, sizeof(my_addr)) < 0) {
         perror("error al hacer el bind\n");
         exit(-1);
     }
@@ -109,8 +111,8 @@ int main(int argc, char const *argv[]) {
         exit(-1);
     } else {
         if (setsockopt(sock, IPPROTO_IPV6, IPV6_MULTICAST_IF, &if_indice, sizeof(if_indice)) < 0) {
-           perror("error al establecer IPPROTO_IPV6\n");
-           exit(-1);
+            perror("error al establecer IPPROTO_IPV6\n");
+            exit(-1);
         }
     }
 
@@ -132,7 +134,7 @@ int main(int argc, char const *argv[]) {
 
     stop = 0;
     while (!stop) {
-        if (sendto(sock, mensaje, BUFFER_SIZE, 0, (struct sockaddr *)&multi_addr, sizeof(multi_addr)) == -1) {
+        if (sendto(sock, mensaje, BUFFER_SIZE, 0, (struct sockaddr*)&multi_addr, sizeof(multi_addr)) == -1) {
             perror("error al hacer sendto\n");
             exit(1);
         }
