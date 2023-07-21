@@ -1,0 +1,270 @@
+# Copyright (C) 1991-2008 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+
+
+# The default values for assignments are stored in the file
+#		game_of_life_assignment_defaults.qdf
+# If this file doesn't exist, and for assignments not listed, see file
+#		assignment_defaults.qdf
+
+# Altera recommends that you do not modify this file. This
+# file is updated automatically by the Quartus II software
+# and any changes you make may be lost or overwritten.
+
+
+set_global_assignment -name FAMILY "Cyclone III"
+set_global_assignment -name DEVICE EP3C16F484C6
+set_global_assignment -name TOP_LEVEL_ENTITY game_of_life
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 8.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "10:13:08  APRIL 24, 2023"
+set_global_assignment -name LAST_QUARTUS_VERSION 9.0
+set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
+set_global_assignment -name TIMEQUEST_MULTICORNER_ANALYSIS ON
+set_global_assignment -name TIMEQUEST_DO_CCPP_REMOVAL ON
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_K18 -to B[3]
+set_location_assignment PIN_J22 -to B[2]
+set_location_assignment PIN_K21 -to B[1]
+set_location_assignment PIN_K22 -to B[0]
+set_location_assignment PIN_G21 -to clk
+set_location_assignment PIN_J21 -to G[3]
+set_location_assignment PIN_K17 -to G[2]
+set_location_assignment PIN_J17 -to G[1]
+set_location_assignment PIN_H22 -to G[0]
+set_location_assignment PIN_L21 -to hsync
+set_location_assignment PIN_H21 -to R[3]
+set_location_assignment PIN_H20 -to R[2]
+set_location_assignment PIN_H17 -to R[1]
+set_location_assignment PIN_H19 -to R[0]
+set_location_assignment PIN_L22 -to vsync
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name RESERVE_DCLK_AFTER_CONFIGURATION "USE AS PROGRAMMING PIN"
+set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_location_assignment PIN_J6 -to play
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_location_assignment PIN_P22 -to ps2_clk
+set_location_assignment PIN_P21 -to ps2_data
+set_global_assignment -name OPTIMIZE_HOLD_TIMING "ALL PATHS"
+set_global_assignment -name OPTIMIZE_MULTI_CORNER_TIMING ON
+set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
+set_global_assignment -name OPTIMIZE_POWER_DURING_FITTING "NORMAL COMPILATION"
+set_instance_assignment -name SLEW_RATE 2 -to G[2]
+set_instance_assignment -name SLEW_RATE 2 -to G[1]
+set_instance_assignment -name SLEW_RATE 2 -to G[0]
+set_instance_assignment -name SLEW_RATE 2 -to hsync
+set_instance_assignment -name SLEW_RATE 2 -to G[3]
+set_instance_assignment -name SLEW_RATE 2 -to B[1]
+set_instance_assignment -name SLEW_RATE 2 -to B[3]
+set_instance_assignment -name SLEW_RATE 2 -to B[2]
+set_instance_assignment -name SLEW_RATE 2 -to B[0]
+set_instance_assignment -name SLEW_RATE 2 -to ps2_clk
+set_instance_assignment -name SLEW_RATE 2 -to ps2_data
+set_instance_assignment -name SLEW_RATE 2 -to R[3]
+set_instance_assignment -name SLEW_RATE 2 -to R[2]
+set_instance_assignment -name SLEW_RATE 2 -to R[1]
+set_instance_assignment -name SLEW_RATE 2 -to R[0]
+set_instance_assignment -name SLEW_RATE 2 -to vsync
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to B[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to B[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to B[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to B[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to G[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to G[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to G[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to G[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to hsync
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to play
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ps2_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ps2_data
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to R[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to R[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to R[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to R[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to vsync
+set_location_assignment PIN_D2 -to clear
+set_global_assignment -name SMART_RECOMPILE ON
+set_global_assignment -name FLOW_ENABLE_IO_ASSIGNMENT_ANALYSIS ON
+set_location_assignment PIN_F1 -to slower
+set_location_assignment PIN_H2 -to faster
+set_location_assignment PIN_G3 -to def_speed
+set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_location_assignment PIN_B18 -to V3[6]
+set_location_assignment PIN_F15 -to V3[5]
+set_location_assignment PIN_A19 -to V3[4]
+set_location_assignment PIN_B19 -to V3[3]
+set_location_assignment PIN_C19 -to V3[2]
+set_location_assignment PIN_D19 -to V3[1]
+set_location_assignment PIN_G15 -to V3[0]
+set_location_assignment PIN_D15 -to V2[6]
+set_location_assignment PIN_A16 -to V2[5]
+set_location_assignment PIN_B16 -to V2[4]
+set_location_assignment PIN_E15 -to V2[3]
+set_location_assignment PIN_A17 -to V2[2]
+set_location_assignment PIN_B17 -to V2[1]
+set_location_assignment PIN_F14 -to V2[0]
+set_location_assignment PIN_A13 -to V1[6]
+set_location_assignment PIN_B13 -to V1[5]
+set_location_assignment PIN_C13 -to V1[4]
+set_location_assignment PIN_A14 -to V1[3]
+set_location_assignment PIN_B14 -to V1[2]
+set_location_assignment PIN_E14 -to V1[1]
+set_location_assignment PIN_A15 -to V1[0]
+set_location_assignment PIN_E11 -to V0[6]
+set_location_assignment PIN_F11 -to V0[5]
+set_location_assignment PIN_H12 -to V0[4]
+set_location_assignment PIN_H13 -to V0[3]
+set_location_assignment PIN_G12 -to V0[2]
+set_location_assignment PIN_F12 -to V0[1]
+set_location_assignment PIN_F13 -to V0[0]
+set_location_assignment PIN_E4 -to pat_glider
+set_location_assignment PIN_H7 -to pat_puffer
+set_location_assignment PIN_E3 -to pat_pentomino
+set_location_assignment PIN_J7 -to pat_lwss
+set_location_assignment PIN_G5 -to pat_pulsar
+set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE SPEED
+set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS ON
+set_global_assignment -name VHDL_FILE debounce.vhd
+set_global_assignment -name VHDL_FILE encoder7seg.vhd
+set_global_assignment -name VHDL_FILE resolution_mouse_informer.vhd
+set_global_assignment -name VHDL_FILE mouse_displayer.vhd
+set_global_assignment -name VHDL_FILE mouse_controller.vhd
+set_global_assignment -name VHDL_FILE ps2interface.vhd
+set_global_assignment -name VHDL_FILE vga_controller_800_60.vhd
+set_global_assignment -name BDF_FILE game_of_life.bdf
+set_global_assignment -name VHDL_FILE generador_imagen.vhd
+set_global_assignment -name QIP_FILE altpll0.qip
+set_global_assignment -name SDC_FILE game_of_life.sdc
+set_global_assignment -name SOURCE_FILE db/game_of_life.cmp.rdb
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_RETIMING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_REGISTER_DUPLICATION ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_MAP_LOGIC_TO_MEMORY_FOR_AREA ON
+set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT EXTRA
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
+set_location_assignment PIN_B1 -to speed[9]
+set_location_assignment PIN_B2 -to speed[8]
+set_location_assignment PIN_C2 -to speed[7]
+set_location_assignment PIN_C1 -to speed[6]
+set_location_assignment PIN_E1 -to speed[5]
+set_location_assignment PIN_F2 -to speed[4]
+set_location_assignment PIN_H1 -to speed[3]
+set_location_assignment PIN_J3 -to speed[2]
+set_location_assignment PIN_J2 -to speed[1]
+set_location_assignment PIN_J1 -to speed[0]
+set_location_assignment PIN_G4 -to pat_phoenix
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_phoenix
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_puffer
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_pulsar
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_glider
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_lwss
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_pentomino
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to clear
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to def_speed
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to faster
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to slower
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to speed[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V0[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V1[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V2[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to V3[0]
+set_instance_assignment -name SLEW_RATE 2 -to speed[9]
+set_instance_assignment -name SLEW_RATE 2 -to speed[8]
+set_instance_assignment -name SLEW_RATE 2 -to speed[7]
+set_instance_assignment -name SLEW_RATE 2 -to speed[6]
+set_instance_assignment -name SLEW_RATE 2 -to speed[5]
+set_instance_assignment -name SLEW_RATE 2 -to speed[4]
+set_instance_assignment -name SLEW_RATE 2 -to speed[3]
+set_instance_assignment -name SLEW_RATE 2 -to speed[2]
+set_instance_assignment -name SLEW_RATE 2 -to speed[1]
+set_instance_assignment -name SLEW_RATE 2 -to speed[0]
+set_instance_assignment -name SLEW_RATE 2 -to V0[6]
+set_instance_assignment -name SLEW_RATE 2 -to V0[5]
+set_instance_assignment -name SLEW_RATE 2 -to V0[4]
+set_instance_assignment -name SLEW_RATE 2 -to V0[3]
+set_instance_assignment -name SLEW_RATE 2 -to V0[2]
+set_instance_assignment -name SLEW_RATE 2 -to V0[1]
+set_instance_assignment -name SLEW_RATE 2 -to V0[0]
+set_instance_assignment -name SLEW_RATE 2 -to V1[6]
+set_instance_assignment -name SLEW_RATE 2 -to V1[5]
+set_instance_assignment -name SLEW_RATE 2 -to V1[4]
+set_instance_assignment -name SLEW_RATE 2 -to V1[3]
+set_instance_assignment -name SLEW_RATE 2 -to V1[2]
+set_instance_assignment -name SLEW_RATE 2 -to V1[1]
+set_instance_assignment -name SLEW_RATE 2 -to V1[0]
+set_instance_assignment -name SLEW_RATE 2 -to V2[6]
+set_instance_assignment -name SLEW_RATE 2 -to V2[5]
+set_instance_assignment -name SLEW_RATE 2 -to V2[4]
+set_instance_assignment -name SLEW_RATE 2 -to V2[3]
+set_instance_assignment -name SLEW_RATE 2 -to V2[2]
+set_instance_assignment -name SLEW_RATE 2 -to V2[1]
+set_instance_assignment -name SLEW_RATE 2 -to V2[0]
+set_instance_assignment -name SLEW_RATE 2 -to V3[6]
+set_instance_assignment -name SLEW_RATE 2 -to V3[5]
+set_instance_assignment -name SLEW_RATE 2 -to V3[4]
+set_instance_assignment -name SLEW_RATE 2 -to V3[3]
+set_instance_assignment -name SLEW_RATE 2 -to V3[2]
+set_instance_assignment -name SLEW_RATE 2 -to V3[1]
+set_instance_assignment -name SLEW_RATE 2 -to V3[0]
+set_global_assignment -name MISC_FILE "Z:/Downloads/USAL/SDP/game_of_life/game_of_life.dpf"
+set_location_assignment PIN_H6 -to pat_eden
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to pat_eden
+set_global_assignment -name MISC_FILE "C:/Users/alumno/Documents/SDP/game_of_life/game_of_life.dpf"
+set_location_assignment PIN_H5 -to pat_saved
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name FLOW_ENABLE_RTL_VIEWER ON
