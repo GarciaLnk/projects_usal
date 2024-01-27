@@ -1,0 +1,14 @@
+[Unit]
+Description=Alerta con un mensaje en Discord al inicio y apagado
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/discord-alert start
+ExecStop=/sbin/discord-alert stop
+StandardOutput=journal+console
+
+[Install]
+WantedBy=multi-user.target

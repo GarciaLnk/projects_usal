@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+html,
+body {
+  font-family: "Roboto Serif", serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  background-color: whitesmoke;
+  color: #323639;
+}
+
+h2,
+h3 {
+  margin: 0.75rem 0;
+  color: #0d1317;
+  font-weight: 400;
+}
+
+.section {
+  background-color: white;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  color: black;
+  margin: 3rem;
+  padding: 3rem;
+  overflow: hidden;
+  margin: auto;
+  width: 59%;
+  letter-spacing: 0.1ch;
+}
+
+.section_title {
+  font-size: 200%;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.need_value.main {
+  font-size: 150%;
+  font-weight: bold;
+}
+
+.need_title {
+  font-style: italic;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 1.3rem 0;
+}
+
+#top {
+  overflow: hidden;
+  background-color: #333;
+  color: #333;
+  width: 100%;
+  text-align: center;
+  transition: 0.2s;
+}
+
+#top a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 0.75rem 2rem;
+  text-decoration: none;
+  font-size: 110%;
+  line-height: 200%;
+}
+
+#top a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.to_top {
+  flex: 0 0 100%;
+  margin-top: 1rem;
+}
+
+.to_top a {
+  text-decoration: none;
+  display: block;
+  height: 32px;
+  width: 32px;
+  background-image: url("assets/top-arrow.svg");
+  background-size: 32px 32px;
+}
+
+.to_top a:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.media {
+  display: block;
+  width: 59vw;
+  height: calc(59vw / 1.77);
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.referencias {
+  list-style: decimal;
+  list-style-position: inside;
+}
+
+.referencias * {
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.titulo {
+  font-style: italic;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:hover {
+  font-weight: bold;
+}
+
+a[href^="#ref"] {
+  position: relative;
+  bottom: 0.2em;
+  font-size: 80%;
+}
+
+@media only screen and (max-width: 1000px) {
+  body {
+    font-size: 225%;
+  }
+
+  .section {
+    width: 90%;
+  }
+
+  .media {
+    width: 90vw;
+    height: calc(90vw / 1.77);
+  }
+
+  .to_top a {
+    height: 72px;
+    width: 72px;
+    background-size: 72px 72px;
+  }
+}

@@ -1,0 +1,137 @@
+---
+version: "3.6"
+
+x-besu-def: &besu-def
+  restart: "on-failure"
+  image: hyperledger/besu:${BESU_VERSION:-latest}
+  env_file:
+    - ./config/besu/.env
+  entrypoint:
+    - /bin/bash
+    - -c
+    - |
+
+      cp "/config/${BESU_CONS_ALGO:-QBFT}genesis.json" /config/genesis.json
+
+      /opt/besu/bin/besu \
+      --config-file=/config/config.toml \
+      --p2p-host=$$(hostname -i) \
+      --rpc-http-api=EEA,WEB3,ETH,NET,TRACE,DEBUG,ADMIN,TXPOOL,PERM,${BESU_CONS_ALGO:-QBFT} ;
+
+services:
+  validator1:
+    <<: *besu-def
+    ports:
+      - 21001:8545/tcp
+      - 30303
+      - 9545
+    environment:
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=validator1,service.version=${BESU_VERSION:-latest}
+    labels:
+      - "consensus=besu"
+    volumes:
+      - ./config/besu/:/config
+      - ./config/nodes/validator1:/opt/besu/keys
+      - ./logs/besu:/tmp/besu
+    networks:
+      quorum-dev-quickstart:
+        ipv4_address: 172.16.239.11
+
+  validator2:
+    <<: *besu-def
+    ports:
+      - 21002:8545/tcp
+      - 30303
+      - 9545
+    environment:
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=validator2,service.version=${BESU_VERSION:-latest}
+    labels:
+      - "consensus=besu"
+    volumes:
+      - ./config/besu/:/config
+      - ./config/nodes/validator2:/opt/besu/keys
+      - ./logs/besu:/tmp/besu
+    depends_on:
+      - validator1
+    networks:
+      quorum-dev-quickstart:
+        ipv4_address: 172.16.239.12
+
+  validator3:
+    <<: *besu-def
+    ports:
+      - 21003:8545/tcp
+      - 30303
+      - 9545
+    environment:
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=validator3,service.version=${BESU_VERSION:-latest}
+    labels:
+      - "consensus=besu"
+    volumes:
+      - ./config/besu/:/config
+      - ./config/nodes/validator3:/opt/besu/keys
+      - ./logs/besu:/tmp/besu
+    depends_on:
+      - validator1
+    networks:
+      quorum-dev-quickstart:
+        ipv4_address: 172.16.239.13
+
+  validator4:
+    <<: *besu-def
+    ports:
+      - 21004:8545/tcp
+      - 30303
+      - 9545
+    environment:
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=validator4,service.version=${BESU_VERSION:-latest}
+    labels:
+      - "consensus=besu"
+    volumes:
+      - ./config/besu/:/config
+      - ./config/nodes/validator4:/opt/besu/keys
+      - ./logs/besu:/tmp/besu
+    depends_on:
+      - validator1
+    networks:
+      quorum-dev-quickstart:
+        ipv4_address: 172.16.239.14
+
+  rpcnode:
+    <<: *besu-def
+    container_name: rpcnode
+    environment:
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=rpcnode,service.version=${BESU_VERSION:-latest}
+    volumes:
+      - ./config/besu/:/config
+      - ./config/nodes/rpcnode:/opt/besu/keys
+      - ./logs/besu:/tmp/besu
+    depends_on:
+      - validator1
+    ports:
+      - 8545:8545/tcp
+      - 8546:8546/tcp
+    networks:
+      quorum-dev-quickstart:
+        ipv4_address: 172.16.239.15
+
+  explorer:
+    image: consensys/quorum-explorer:d9812be
+    volumes:
+      - ./quorum-explorer/config.json:/app/config.json
+      - ./quorum-explorer/env.production:/app/.env.production
+    depends_on:
+      - rpcnode
+    ports:
+      - 25000:25000/tcp
+    networks:
+      quorum-dev-quickstart:
+        ipv4_address: 172.16.239.31
+
+networks:
+  quorum-dev-quickstart:
+    name: quorum-dev-quickstart
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.239.0/24

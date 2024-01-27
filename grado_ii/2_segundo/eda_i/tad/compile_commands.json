@@ -1,0 +1,63 @@
+[
+  {
+    "directory": "C:\\Users\\Garcia\\CLionProjects\\entregaTAD",
+    "arguments": [
+      "gcc",
+      "-c",
+      "-o",
+      "main.o",
+      "main.c",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-I."
+    ],
+    "file": "main.c"
+  },
+  {
+    "directory": "C:\\Users\\Garcia\\CLionProjects\\entregaTAD",
+    "arguments": [
+      "gcc",
+      "-c",
+      "-o",
+      "listas/lista.o",
+      "listas/lista.c",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-I."
+    ],
+    "file": "listas/lista.c"
+  },
+  {
+    "directory": "C:\\Users\\Garcia\\CLionProjects\\entregaTAD",
+    "arguments": [
+      "gcc",
+      "-c",
+      "-o",
+      "pilas/pila.o",
+      "pilas/pila.c",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-I."
+    ],
+    "file": "pilas/pila.c"
+  },
+  {
+    "directory": "C:\\Users\\Garcia\\CLionProjects\\entregaTAD",
+    "arguments": [
+      "gcc",
+      "-c",
+      "-o",
+      "colas/cola.o",
+      "colas/cola.c",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-I."
+    ],
+    "file": "colas/cola.c"
+  }
+]
+
