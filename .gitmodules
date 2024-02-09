@@ -1,0 +1,6 @@
+[submodule "master_si/neuroborrosa/neuronal/mlp.cpp"]
+	path = master_si/neuroborrosa/neuronal/mlp.cpp
+	url = https://github.com/GarciaLnk/mlp.cpp
+[submodule "master_si/recuperacion_info/desksearx"]
+	path = master_si/recuperacion_info/desksearx
+	url = https://github.com/GarciaLnk/desksearx
