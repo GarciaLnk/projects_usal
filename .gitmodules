@@ -4,3 +4,12 @@
 [submodule "master_si/recuperacion_info/desksearx"]
 	path = master_si/recuperacion_info/desksearx
 	url = https://github.com/GarciaLnk/desksearx
+[submodule "master_si/habla/whispergo"]
+	path = master_si/habla/whispergo
+	url = https://github.com/GarciaLnk/whispergo
+[submodule "master_si/gestual/gesturenav"]
+	path = master_si/gestual/gesturenav
+	url = https://github.com/GarciaLnk/gesturenav
+[submodule "master_si/analitica_visual/spotify-dataviz"]
+	path = master_si/analitica_visual/spotify-dataviz
+	url = https://github.com/GarciaLnk/spotify-dataviz
